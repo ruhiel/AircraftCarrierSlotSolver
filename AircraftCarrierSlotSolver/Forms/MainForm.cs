@@ -27,7 +27,7 @@ namespace AircraftCarrierSlotSolver
 		{
 			var column = ShipSlotInfoDataGridView.Columns[0] as DataGridViewComboBoxColumn;
 
-			using (var parser = new CsvParser(new StreamReader("air.csv", Encoding.GetEncoding("shift-jis"))))
+			using (var parser = new CsvParser(new StreamReader("air.csv", new UTF8Encoding(false))))
 			{
 				parser.Configuration.HasHeaderRecord = true;
 				parser.Configuration.RegisterClassMap<AirCraftMap>();
@@ -38,7 +38,7 @@ namespace AircraftCarrierSlotSolver
 				}
 			}
 
-			using (var parser = new CsvParser(new StreamReader("slots.csv", Encoding.GetEncoding("shift-jis"))))
+			using (var parser = new CsvParser(new StreamReader("slots.csv", new UTF8Encoding(false))))
 			{
 				parser.Configuration.HasHeaderRecord = true;
 				parser.Configuration.RegisterClassMap<ShipInfoMap>();
@@ -120,7 +120,7 @@ namespace AircraftCarrierSlotSolver
 
 		private void CalcButton_Click(object sender, EventArgs e)
 		{
-			using (StreamWriter writer = new StreamWriter(@"slot.lp", false, Encoding.GetEncoding("shift-jis")))
+			using (StreamWriter writer = new StreamWriter(@"slot.lp", false, new UTF8Encoding(false)))
 			{
 				var shipSlotList = new List<ShipSlotInfo>();
 				foreach (DataGridViewRow row in ShipSlotInfoDataGridView.Rows)
