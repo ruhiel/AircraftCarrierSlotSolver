@@ -1,13 +1,12 @@
-﻿using CsvHelper;
+﻿using AircraftCarrierSlotSolver.Forms;
+using CsvHelper;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AircraftCarrierSlotSolver
@@ -50,11 +49,18 @@ namespace AircraftCarrierSlotSolver
 			}
 
 			column.DataSource = _ShipInfoList.Select(x => x.Name).ToList();
+			ShipSelectComboBox.DataSource = _ShipInfoList.Select(x => x.Name).ToList();
+
+			if (!File.Exists(Properties.Resources.SettingFileName))
+			{
+				Settings.Instance.Seigen = _AirCraftList.ToDictionary(x => x.Name, _ => 0).ConvertDictionaryToList();
+				Settings.SaveToXmlFile();
+			}
 		}
 
 		private void AddButton_Click(object sender, EventArgs e)
 		{
-			this.shipSlotInfoBindingSource.Add(CreateShipSlotInfo("加賀改"));
+			this.shipSlotInfoBindingSource.Add(CreateShipSlotInfo(ShipSelectComboBox.SelectedValue.ToString()));
 		}
 
 		private void ShipSlotInfoDataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -100,11 +106,16 @@ namespace AircraftCarrierSlotSolver
 			}
 
 			item.Slot1Num = ship.Slot1Num;
+			item.Slot1 = string.Empty;
 			item.Slot2Num = ship.Slot2Num;
+			item.Slot2 = string.Empty;
 			item.Slot3Num = ship.Slot3Num;
+			item.Slot3 = string.Empty;
 			item.Slot4Num = ship.Slot4Num;
+			item.Slot4 = string.Empty;
 			ShipSlotInfoDataGridView.InvalidateRow(rowIndex);
 		}
+
 		private ShipSlotInfo CreateShipSlotInfo(string name)
 		{
 			var ship = _ShipInfoList.Where(x => x.Name == name).First();
@@ -120,9 +131,10 @@ namespace AircraftCarrierSlotSolver
 
 		private void CalcButton_Click(object sender, EventArgs e)
 		{
+			var shipSlotList = new List<ShipSlotInfo>();
+
 			using (StreamWriter writer = new StreamWriter(@"slot.lp", false, new UTF8Encoding(false)))
 			{
-				var shipSlotList = new List<ShipSlotInfo>();
 				foreach (DataGridViewRow row in ShipSlotInfoDataGridView.Rows)
 				{
 					var item = row.DataBoundItem as ShipSlotInfo;
@@ -135,19 +147,105 @@ namespace AircraftCarrierSlotSolver
 
 				OutputSlotCondition(writer, shipSlotList);
 
-				var dictionary = new Dictionary<string, int>()
-				{
-					{"震電改", 0},
-					{"烈風改", 3},
-					{"烈風(601)", 3}
-				};
+				Settings.LoadFromXmlFile();
 
-				OutputStockCondition(writer, shipSlotList, dictionary);
+				OutputStockCondition(writer, shipSlotList, Settings.Instance.Seigen.ConvertListToDictionary());
 
 				OutputBinary(writer, shipSlotList);
 
 				writer.WriteLine("end");
 			}
+
+			var dir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+			using (StreamWriter writer = new StreamWriter(Path.Combine(dir, "solve.txt"), false, new UTF8Encoding(false)))
+			{
+				writer.WriteLine("read slot.lp");
+				writer.WriteLine("optimize");
+				writer.WriteLine("display solution");
+				writer.WriteLine("quit");
+			}
+
+			var slotStringList = new List<string>();
+
+			try
+			{
+				var logFile = Path.Combine(dir, "result.log");
+
+				if(File.Exists(logFile))
+				{
+					File.Delete(logFile);
+				}
+				Settings.LoadFromXmlFile();
+
+				var psi = new ProcessStartInfo();
+
+				psi.FileName = Settings.Instance.SolverPath;
+				psi.Arguments = "-b solve.txt" + " -l result.log";
+				psi.WorkingDirectory = dir;
+
+				var process = Process.Start(psi);
+
+				process.WaitForExit();
+
+				var log = Path.Combine(dir, "result.log");
+				var regex = new System.Text.RegularExpressions.Regex(@"(?<slot>slot_\d+_\d_\d+).+");
+				using (StreamReader r = new StreamReader(log))
+				{
+					string line;
+					while ((line = r.ReadLine()) != null)
+					{
+						var matches = regex.Matches(line);
+						if(matches.Count > 0)
+						{
+							slotStringList.Add(matches[0].Groups["slot"].Value);
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("SCIPソルバーの実行に失敗しました。:" + ex.Message);
+
+				return;
+			}
+
+			foreach(var generatorInfo in slotStringList.Select(x => GetIEnumerable(shipSlotList).First(y => y.SlotName == x)))
+			{
+				var rowItem = GetRowItem(generatorInfo.Ship.Item1.Name);
+				if( generatorInfo.Slot.Item2 == 0)
+				{
+					rowItem.Item1.Slot1 = generatorInfo.AirCraft.Item1.Name;
+				}
+				else if (generatorInfo.Slot.Item2 == 1)
+				{
+					rowItem.Item1.Slot2 = generatorInfo.AirCraft.Item1.Name;
+				}
+				else if (generatorInfo.Slot.Item2 == 2)
+				{
+					rowItem.Item1.Slot3 = generatorInfo.AirCraft.Item1.Name;
+				}
+				else if (generatorInfo.Slot.Item2 == 3)
+				{
+					rowItem.Item1.Slot4 = generatorInfo.AirCraft.Item1.Name;
+				}
+
+				ShipSlotInfoDataGridView.InvalidateRow(rowItem.Item2);
+			}
+		}
+
+		private Tuple<ShipSlotInfo, int> GetRowItem(string shipName)
+		{
+			for(int i = 0; i < ShipSlotInfoDataGridView.Rows.Count; i++)
+			{
+				var item = ShipSlotInfoDataGridView.Rows[i].DataBoundItem as ShipSlotInfo;
+				if(item.ShipName == shipName)
+				{
+					return Tuple.Create(item, i);
+				}
+			}
+
+			throw new Exception("艦名が見つかりません");
 		}
 
 		private void OutputStockCondition(StreamWriter writer, List<ShipSlotInfo> shipSlotList, Dictionary<string, int> condition)
@@ -200,7 +298,7 @@ namespace AircraftCarrierSlotSolver
 				var text = "+ " + record.AirSuperiorityPotential + " " + record.SlotName + @" \ " + record.Ship.Item1.Name + " " + record.Slot.Item1 + " " + record.AirCraft.Item1.Name;
 				writer.WriteLine(text);
 			}
-			writer.WriteLine(">= 350");
+			writer.WriteLine(">= " + AirSuperiorityNumericUpDown.Value);
 			writer.WriteLine();
 		}
 
@@ -232,6 +330,48 @@ namespace AircraftCarrierSlotSolver
 					}
 				}
 			}
+		}
+
+		private void airCraftSettingToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var form = new AirCraftSettingForm();
+			form.ShowDialog();
+		}
+
+		private void solverSettingToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (var ofd = new OpenFileDialog())
+			{
+				//[ファイルの種類]に表示される選択肢を指定する
+				//指定しないとすべてのファイルが表示される
+				ofd.Filter = "実行ファイル|*.exe";
+				//[ファイルの種類]ではじめに選択されるものを指定する
+				//2番目の「すべてのファイル」が選択されているようにする
+				ofd.FilterIndex = 1;
+				//タイトルを設定する
+				ofd.Title = "開くファイルを選択してください";
+				//ダイアログボックスを閉じる前に現在のディレクトリを復元するようにする
+				ofd.RestoreDirectory = true;
+				//存在しないファイルの名前が指定されたとき警告を表示する
+				//デフォルトでTrueなので指定する必要はない
+				ofd.CheckFileExists = true;
+				//存在しないパスが指定されたとき警告を表示する
+				//デフォルトでTrueなので指定する必要はない
+				ofd.CheckPathExists = true;
+
+				// ダイアログを表示し、戻り値が [OK] の場合は、選択したファイルを表示する
+				if (ofd.ShowDialog() == DialogResult.OK)
+				{
+					MessageBox.Show(ofd.FileName);
+
+					Settings.LoadFromXmlFile();
+
+					Settings.Instance.SolverPath = ofd.FileName;
+
+					Settings.SaveToXmlFile();
+				}
+			}
+
 		}
 	}
 }
