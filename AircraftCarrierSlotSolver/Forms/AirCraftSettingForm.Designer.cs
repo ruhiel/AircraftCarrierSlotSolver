@@ -30,12 +30,15 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			this.AirCraftSettingDataGridView = new System.Windows.Forms.DataGridView();
-			this.OKButton = new System.Windows.Forms.Button();
-			this.airCraftSettingBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.airCraftSettingBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.OKButton = new System.Windows.Forms.Button();
+			this.CruiserLimitLabel = new System.Windows.Forms.Label();
+			this.CruiserLimitNumericUpDown = new System.Windows.Forms.NumericUpDown();
 			((System.ComponentModel.ISupportInitialize)(this.AirCraftSettingDataGridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.airCraftSettingBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.CruiserLimitNumericUpDown)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// AirCraftSettingDataGridView
@@ -55,20 +58,6 @@
 			this.AirCraftSettingDataGridView.Size = new System.Drawing.Size(275, 368);
 			this.AirCraftSettingDataGridView.TabIndex = 0;
 			// 
-			// OKButton
-			// 
-			this.OKButton.Location = new System.Drawing.Point(109, 406);
-			this.OKButton.Name = "OKButton";
-			this.OKButton.Size = new System.Drawing.Size(75, 23);
-			this.OKButton.TabIndex = 1;
-			this.OKButton.Text = "OK";
-			this.OKButton.UseVisualStyleBackColor = true;
-			this.OKButton.Click += new System.EventHandler(this.OKButton_Click);
-			// 
-			// airCraftSettingBindingSource
-			// 
-			this.airCraftSettingBindingSource.DataSource = typeof(AircraftCarrierSlotSolver.AirCraftSetting);
-			// 
 			// nameDataGridViewTextBoxColumn
 			// 
 			this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
@@ -82,11 +71,48 @@
 			this.valueDataGridViewTextBoxColumn.HeaderText = "制限数";
 			this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
 			// 
+			// airCraftSettingBindingSource
+			// 
+			this.airCraftSettingBindingSource.DataSource = typeof(AircraftCarrierSlotSolver.AirCraftSetting);
+			// 
+			// OKButton
+			// 
+			this.OKButton.Location = new System.Drawing.Point(110, 443);
+			this.OKButton.Name = "OKButton";
+			this.OKButton.Size = new System.Drawing.Size(75, 23);
+			this.OKButton.TabIndex = 1;
+			this.OKButton.Text = "OK";
+			this.OKButton.UseVisualStyleBackColor = true;
+			this.OKButton.Click += new System.EventHandler(this.OKButton_Click);
+			// 
+			// CruiserLimitLabel
+			// 
+			this.CruiserLimitLabel.AutoSize = true;
+			this.CruiserLimitLabel.Location = new System.Drawing.Point(23, 409);
+			this.CruiserLimitLabel.Name = "CruiserLimitLabel";
+			this.CruiserLimitLabel.Size = new System.Drawing.Size(120, 12);
+			this.CruiserLimitLabel.TabIndex = 2;
+			this.CruiserLimitLabel.Text = "巡洋艦に積む水上機数";
+			// 
+			// CruiserLimitNumericUpDown
+			// 
+			this.CruiserLimitNumericUpDown.Location = new System.Drawing.Point(150, 406);
+			this.CruiserLimitNumericUpDown.Maximum = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+			this.CruiserLimitNumericUpDown.Name = "CruiserLimitNumericUpDown";
+			this.CruiserLimitNumericUpDown.Size = new System.Drawing.Size(62, 19);
+			this.CruiserLimitNumericUpDown.TabIndex = 3;
+			// 
 			// AirCraftSettingForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(300, 451);
+			this.ClientSize = new System.Drawing.Size(300, 478);
+			this.Controls.Add(this.CruiserLimitNumericUpDown);
+			this.Controls.Add(this.CruiserLimitLabel);
 			this.Controls.Add(this.OKButton);
 			this.Controls.Add(this.AirCraftSettingDataGridView);
 			this.MaximizeBox = false;
@@ -96,7 +122,9 @@
 			this.Load += new System.EventHandler(this.AirCraftSettingForm_Load);
 			((System.ComponentModel.ISupportInitialize)(this.AirCraftSettingDataGridView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.airCraftSettingBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.CruiserLimitNumericUpDown)).EndInit();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -107,5 +135,7 @@
 		private System.Windows.Forms.BindingSource airCraftSettingBindingSource;
 		private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
+		private System.Windows.Forms.Label CruiserLimitLabel;
+		private System.Windows.Forms.NumericUpDown CruiserLimitNumericUpDown;
 	}
 }

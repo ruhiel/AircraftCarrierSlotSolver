@@ -29,7 +29,8 @@ namespace AircraftCarrierSlotSolver.Forms
 
 			Settings.LoadFromXmlFile();
 
-			Settings.Instance.Seigen = list.ToDictionary(x => x.Name, x => x.Value).ConvertDictionaryToList();
+			Settings.Instance.AirCraftLimit = list.ToDictionary(x => x.Name, x => x.Value).ConvertDictionaryToList();
+			Settings.Instance.CruiserSlotNum = (int)CruiserLimitNumericUpDown.Value;
 
 			Settings.SaveToXmlFile();
 
@@ -39,7 +40,7 @@ namespace AircraftCarrierSlotSolver.Forms
 		private void AirCraftSettingForm_Load(object sender, EventArgs e)
 		{
 			Settings.LoadFromXmlFile();
-			foreach (var record in Settings.Instance.Seigen)
+			foreach (var record in Settings.Instance.AirCraftLimit)
 			{
 				this.airCraftSettingBindingSource.Add(new AirCraftSetting()
 				{
@@ -47,6 +48,8 @@ namespace AircraftCarrierSlotSolver.Forms
 					Value = record.Value
 				});
 			}
+
+			CruiserLimitNumericUpDown.Value = Settings.Instance.CruiserSlotNum;
 		}
 	}
 }

@@ -53,7 +53,8 @@ namespace AircraftCarrierSlotSolver
 
 			if (!File.Exists(Properties.Resources.SettingFileName))
 			{
-				Settings.Instance.Seigen = _AirCraftList.ToDictionary(x => x.Name, _ => 0).ConvertDictionaryToList();
+				Settings.Instance.AirCraftLimit = _AirCraftList.ToDictionary(x => x.Name, _ => 0).ConvertDictionaryToList();
+				Settings.Instance.CruiserSlotNum = 1;
 				Settings.SaveToXmlFile();
 			}
 		}
@@ -149,7 +150,9 @@ namespace AircraftCarrierSlotSolver
 
 				Settings.LoadFromXmlFile();
 
-				OutputStockCondition(writer, shipSlotList, Settings.Instance.Seigen.ConvertListToDictionary());
+				OutputStockCondition(writer, shipSlotList, Settings.Instance.AirCraftLimit.ConvertListToDictionary());
+
+				OutputShipTypeCondition(writer, shipSlotList);
 
 				OutputBinary(writer, shipSlotList);
 
@@ -232,6 +235,53 @@ namespace AircraftCarrierSlotSolver
 
 				ShipSlotInfoDataGridView.InvalidateRow(rowItem.Item2);
 			}
+		}
+
+		private void OutputShipTypeCondition(StreamWriter writer, List<ShipSlotInfo> shipSlotList)
+		{
+			if(GetIEnumerable(shipSlotList).Any(x => x.Ship.Item1.Type == "空母"))
+			{
+				// 空母が1隻以上の場合
+				// 空母に水上機載せない
+				foreach (var record in GetIEnumerable(shipSlotList)
+					.Where(x => x.Ship.Item1.Type == "空母" && 
+						(x.AirCraft.Item1.Type == "水爆" || x.AirCraft.Item1.Type == "水戦")))
+				{
+					writer.WriteLine("+ " + record.SlotName);
+				}
+				writer.WriteLine("= 0");
+				writer.WriteLine();
+			}
+
+			if (GetIEnumerable(shipSlotList).Any(x => x.Ship.Item1.Type == "巡洋艦"))
+			{
+				// 巡洋艦が1隻以上の場合
+				// 巡洋艦に艦載機載せない
+				foreach (var record in GetIEnumerable(shipSlotList)
+					.Where(x => x.Ship.Item1.Type == "巡洋艦" &&
+						(x.AirCraft.Item1.Type == "艦戦" || x.AirCraft.Item1.Type == "艦爆" || x.AirCraft.Item1.Type == "艦攻")))
+				{
+					writer.WriteLine("+ " + record.SlotName);
+				}
+				writer.WriteLine("= 0");
+				writer.WriteLine();
+
+				Settings.LoadFromXmlFile();
+
+				foreach(var noEquipShipList in GetIEnumerable(shipSlotList)
+				   .Where(x => x.Ship.Item1.Type == "巡洋艦" && x.AirCraft.Item1.Name == "装備なし")
+				   .GroupBy(y => y.Ship.Item2))
+				{
+					foreach(var noEquipList in noEquipShipList)
+					{
+						writer.WriteLine("+ " + noEquipList.SlotName);
+					}
+
+					writer.WriteLine(">= " + (4 - Settings.Instance.CruiserSlotNum));
+					writer.WriteLine();
+				}
+			}
+
 		}
 
 		private Tuple<ShipSlotInfo, int> GetRowItem(string shipName)
@@ -318,13 +368,18 @@ namespace AircraftCarrierSlotSolver
 
 		private IEnumerable<GeneratorInfo> GetIEnumerable(List<ShipSlotInfo> shipSlotList)
 		{
+			var noEquip = new List<AirCraft>()
+			{
+				new AirCraft() { Name = "装備なし", Type = "水戦", AA = 0, FirePower = 0, Bomber = 0, Torpedo = 0, Evasion = 0, Accuracy = 0 }
+			};	
+
 			foreach (var ship in _ShipInfoList
 				.Select((item, index) => Tuple.Create(item, index))
 				.Where(x => shipSlotList.Select(y => y.ShipName).Contains(x.Item1.Name)))
 			{
 				foreach (var slot in ship.Item1.Slots.Select((item, index) => Tuple.Create(item, index)))
 				{
-					foreach (var aircraft in _AirCraftList.Select((item , index) => Tuple.Create(item,index)))
+					foreach (var aircraft in _AirCraftList.Concat(noEquip).Select((item , index) => Tuple.Create(item,index)))
 					{
 						yield return new GeneratorInfo() { Ship = ship, Slot = slot, AirCraft = aircraft };
 					}

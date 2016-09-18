@@ -41,12 +41,18 @@ namespace AircraftCarrierSlotSolver
 		{
 			get
 			{
+				if(AirCraft.Item1.Name == "装備なし")
+				{
+					return 0;
+				}
+
 				var air = AirCraft.Item1.AA * Math.Sqrt(Slot.Item1);
 				double bonus = 0;
 				switch(AirCraft.Item1.Type)
 				{
 					case "艦攻":
 					case "艦爆":
+					case "水爆":
 						bonus = 3;
 						break;
 					case "艦戦":

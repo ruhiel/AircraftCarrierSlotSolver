@@ -10,7 +10,7 @@ namespace AircraftCarrierSlotSolver
 	{
 		public string Name { get; set; }
 		public string Type { get; set; }
-		public string FirePower { get; set; }
+		public int FirePower { get; set; }
 		public int AA { get; set; }
 		public int Bomber { get; set; }
 		public int Torpedo { get; set; }

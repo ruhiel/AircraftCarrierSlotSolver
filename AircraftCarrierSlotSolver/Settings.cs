@@ -9,13 +9,26 @@ namespace AircraftCarrierSlotSolver
 	[Serializable()]
 	public class Settings
 	{
-		//設定のプロパティ
-		public List<KeyAndValue<string, int>> Seigen
+		/// <summary>
+		/// 装備制限
+		/// </summary>
+		public List<KeyAndValue<string, int>> AirCraftLimit
 		{
 			get; set;
 		}
 
+		/// <summary>
+		/// ソルバーファイルパス
+		/// </summary>
 		public string SolverPath
+		{
+			get; set;
+		}
+
+		/// <summary>
+		/// 巡洋艦に積む水上機の制限数
+		/// </summary>
+		public int CruiserSlotNum
 		{
 			get; set;
 		}

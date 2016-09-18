@@ -9,6 +9,7 @@ namespace AircraftCarrierSlotSolver
 	public class ShipInfo
 	{
 		public string Name { get; set; }
+		public string Type { get; set; }
 		public int FirePower { get; set; }
 		public int SlotNum { get; set; }
 		public int Slot1Num { get; set; }
