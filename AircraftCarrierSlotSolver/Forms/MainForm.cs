@@ -425,8 +425,6 @@ namespace AircraftCarrierSlotSolver
 				// ダイアログを表示し、戻り値が [OK] の場合は、選択したファイルを表示する
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					MessageBox.Show(ofd.FileName);
-
 					Settings.LoadFromXmlFile();
 
 					Settings.Instance.SolverPath = ofd.FileName;

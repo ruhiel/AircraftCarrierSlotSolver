@@ -30,7 +30,6 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			this.ShipSlotInfoDataGridView = new System.Windows.Forms.DataGridView();
-			this.shipSlotInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.AddButton = new System.Windows.Forms.Button();
 			this.CalcButton = new System.Windows.Forms.Button();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -40,6 +39,7 @@
 			this.ShipSelectComboBox = new System.Windows.Forms.ComboBox();
 			this.AirSuperiorityLabel = new System.Windows.Forms.Label();
 			this.AirSuperiorityNumericUpDown = new System.Windows.Forms.NumericUpDown();
+			this.shipSlotInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.shipNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.slot1NumDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.slot1DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -50,9 +50,9 @@
 			this.slot4NumDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.slot4DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.ShipSlotInfoDataGridView)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.shipSlotInfoBindingSource)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AirSuperiorityNumericUpDown)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.shipSlotInfoBindingSource)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ShipSlotInfoDataGridView
@@ -75,14 +75,10 @@
 			this.ShipSlotInfoDataGridView.Location = new System.Drawing.Point(12, 69);
 			this.ShipSlotInfoDataGridView.Name = "ShipSlotInfoDataGridView";
 			this.ShipSlotInfoDataGridView.RowTemplate.Height = 21;
-			this.ShipSlotInfoDataGridView.Size = new System.Drawing.Size(664, 180);
+			this.ShipSlotInfoDataGridView.Size = new System.Drawing.Size(865, 180);
 			this.ShipSlotInfoDataGridView.TabIndex = 0;
 			this.ShipSlotInfoDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.ShipSlotInfoDataGridView_CellEndEdit);
 			this.ShipSlotInfoDataGridView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.ShipSlotInfoDataGridView_EditingControlShowing);
-			// 
-			// shipSlotInfoBindingSource
-			// 
-			this.shipSlotInfoBindingSource.DataSource = typeof(AircraftCarrierSlotSolver.ShipSlotInfo);
 			// 
 			// AddButton
 			// 
@@ -110,7 +106,7 @@
             this.settingToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(689, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(889, 24);
 			this.menuStrip1.TabIndex = 3;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -167,6 +163,10 @@
 			this.AirSuperiorityNumericUpDown.Size = new System.Drawing.Size(53, 19);
 			this.AirSuperiorityNumericUpDown.TabIndex = 6;
 			// 
+			// shipSlotInfoBindingSource
+			// 
+			this.shipSlotInfoBindingSource.DataSource = typeof(AircraftCarrierSlotSolver.ShipSlotInfo);
+			// 
 			// shipNameDataGridViewTextBoxColumn
 			// 
 			this.shipNameDataGridViewTextBoxColumn.DataPropertyName = "ShipName";
@@ -189,6 +189,7 @@
 			this.slot1DataGridViewTextBoxColumn.HeaderText = "スロット1";
 			this.slot1DataGridViewTextBoxColumn.Name = "slot1DataGridViewTextBoxColumn";
 			this.slot1DataGridViewTextBoxColumn.ReadOnly = true;
+			this.slot1DataGridViewTextBoxColumn.Width = 150;
 			// 
 			// slot2NumDataGridViewTextBoxColumn
 			// 
@@ -204,6 +205,7 @@
 			this.slot2DataGridViewTextBoxColumn.HeaderText = "スロット2";
 			this.slot2DataGridViewTextBoxColumn.Name = "slot2DataGridViewTextBoxColumn";
 			this.slot2DataGridViewTextBoxColumn.ReadOnly = true;
+			this.slot2DataGridViewTextBoxColumn.Width = 150;
 			// 
 			// slot3NumDataGridViewTextBoxColumn
 			// 
@@ -219,6 +221,7 @@
 			this.slot3DataGridViewTextBoxColumn.HeaderText = "スロット3";
 			this.slot3DataGridViewTextBoxColumn.Name = "slot3DataGridViewTextBoxColumn";
 			this.slot3DataGridViewTextBoxColumn.ReadOnly = true;
+			this.slot3DataGridViewTextBoxColumn.Width = 150;
 			// 
 			// slot4NumDataGridViewTextBoxColumn
 			// 
@@ -234,12 +237,13 @@
 			this.slot4DataGridViewTextBoxColumn.HeaderText = "スロット4";
 			this.slot4DataGridViewTextBoxColumn.Name = "slot4DataGridViewTextBoxColumn";
 			this.slot4DataGridViewTextBoxColumn.ReadOnly = true;
+			this.slot4DataGridViewTextBoxColumn.Width = 150;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(689, 261);
+			this.ClientSize = new System.Drawing.Size(889, 261);
 			this.Controls.Add(this.AirSuperiorityNumericUpDown);
 			this.Controls.Add(this.AirSuperiorityLabel);
 			this.Controls.Add(this.ShipSelectComboBox);
@@ -254,10 +258,10 @@
 			this.Text = "空母スロットソルバー";
 			this.Load += new System.EventHandler(this.MainForm_Load);
 			((System.ComponentModel.ISupportInitialize)(this.ShipSlotInfoDataGridView)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.shipSlotInfoBindingSource)).EndInit();
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AirSuperiorityNumericUpDown)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.shipSlotInfoBindingSource)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
