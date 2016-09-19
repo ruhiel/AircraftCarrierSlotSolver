@@ -136,9 +136,11 @@ namespace AircraftCarrierSlotSolver
 
 			using (StreamWriter writer = new StreamWriter(@"slot.lp", false, new UTF8Encoding(false)))
 			{
-				foreach (DataGridViewRow row in ShipSlotInfoDataGridView.Rows)
+				for (int i = 0; i< ShipSlotInfoDataGridView.Rows.Count; i++)
 				{
-					var item = row.DataBoundItem as ShipSlotInfo;
+					var item = ShipSlotInfoDataGridView.Rows[i].DataBoundItem as ShipSlotInfo;
+					item.Slot1 = item.Slot2 = item.Slot3 = item.Slot4 = string.Empty;
+					ShipSlotInfoDataGridView.InvalidateRow(i);
 					shipSlotList.Add(item);
 				}
 
@@ -210,6 +212,12 @@ namespace AircraftCarrierSlotSolver
 			{
 				MessageBox.Show("SCIPソルバーの実行に失敗しました。:" + ex.Message);
 
+				return;
+			}
+
+			if(!slotStringList.Any())
+			{
+				MessageBox.Show("制空値を満たす解がありませんでした。");
 				return;
 			}
 
