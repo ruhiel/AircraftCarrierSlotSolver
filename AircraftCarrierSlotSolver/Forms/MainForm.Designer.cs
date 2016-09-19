@@ -75,7 +75,7 @@
 			this.ShipSlotInfoDataGridView.Location = new System.Drawing.Point(12, 69);
 			this.ShipSlotInfoDataGridView.Name = "ShipSlotInfoDataGridView";
 			this.ShipSlotInfoDataGridView.RowTemplate.Height = 21;
-			this.ShipSlotInfoDataGridView.Size = new System.Drawing.Size(865, 180);
+			this.ShipSlotInfoDataGridView.Size = new System.Drawing.Size(885, 180);
 			this.ShipSlotInfoDataGridView.TabIndex = 0;
 			this.ShipSlotInfoDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.ShipSlotInfoDataGridView_CellEndEdit);
 			this.ShipSlotInfoDataGridView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.ShipSlotInfoDataGridView_EditingControlShowing);
@@ -106,7 +106,7 @@
             this.settingToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(889, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(920, 24);
 			this.menuStrip1.TabIndex = 3;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -174,6 +174,7 @@
 			this.shipNameDataGridViewTextBoxColumn.Name = "shipNameDataGridViewTextBoxColumn";
 			this.shipNameDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
 			this.shipNameDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			this.shipNameDataGridViewTextBoxColumn.Width = 120;
 			// 
 			// slot1NumDataGridViewTextBoxColumn
 			// 
@@ -243,7 +244,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(889, 261);
+			this.ClientSize = new System.Drawing.Size(920, 261);
 			this.Controls.Add(this.AirSuperiorityNumericUpDown);
 			this.Controls.Add(this.AirSuperiorityLabel);
 			this.Controls.Add(this.ShipSelectComboBox);
