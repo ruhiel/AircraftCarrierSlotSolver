@@ -434,5 +434,17 @@ namespace AircraftCarrierSlotSolver
 			}
 
 		}
+
+		private void ShipSlotInfoDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+		{
+			ButtonEnableChange();
+		}
+
+		private void ShipSlotInfoDataGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+		{
+			ButtonEnableChange();
+		}
+
+		private void ButtonEnableChange() => CalcButton.Enabled = ShipSlotInfoDataGridView.RowCount != 0;
 	}
 }

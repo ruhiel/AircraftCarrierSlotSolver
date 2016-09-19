@@ -39,7 +39,6 @@
 			this.ShipSelectComboBox = new System.Windows.Forms.ComboBox();
 			this.AirSuperiorityLabel = new System.Windows.Forms.Label();
 			this.AirSuperiorityNumericUpDown = new System.Windows.Forms.NumericUpDown();
-			this.shipSlotInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.shipNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.slot1NumDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.slot1DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,6 +48,7 @@
 			this.slot3DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.slot4NumDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.slot4DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.shipSlotInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.ShipSlotInfoDataGridView)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AirSuperiorityNumericUpDown)).BeginInit();
@@ -79,6 +79,8 @@
 			this.ShipSlotInfoDataGridView.TabIndex = 0;
 			this.ShipSlotInfoDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.ShipSlotInfoDataGridView_CellEndEdit);
 			this.ShipSlotInfoDataGridView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.ShipSlotInfoDataGridView_EditingControlShowing);
+			this.ShipSlotInfoDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.ShipSlotInfoDataGridView_RowsAdded);
+			this.ShipSlotInfoDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.ShipSlotInfoDataGridView_RowsRemoved);
 			// 
 			// AddButton
 			// 
@@ -92,6 +94,7 @@
 			// 
 			// CalcButton
 			// 
+			this.CalcButton.Enabled = false;
 			this.CalcButton.Location = new System.Drawing.Point(361, 27);
 			this.CalcButton.Name = "CalcButton";
 			this.CalcButton.Size = new System.Drawing.Size(75, 23);
@@ -162,10 +165,6 @@
 			this.AirSuperiorityNumericUpDown.Name = "AirSuperiorityNumericUpDown";
 			this.AirSuperiorityNumericUpDown.Size = new System.Drawing.Size(53, 19);
 			this.AirSuperiorityNumericUpDown.TabIndex = 6;
-			// 
-			// shipSlotInfoBindingSource
-			// 
-			this.shipSlotInfoBindingSource.DataSource = typeof(AircraftCarrierSlotSolver.ShipSlotInfo);
 			// 
 			// shipNameDataGridViewTextBoxColumn
 			// 
@@ -239,6 +238,10 @@
 			this.slot4DataGridViewTextBoxColumn.Name = "slot4DataGridViewTextBoxColumn";
 			this.slot4DataGridViewTextBoxColumn.ReadOnly = true;
 			this.slot4DataGridViewTextBoxColumn.Width = 150;
+			// 
+			// shipSlotInfoBindingSource
+			// 
+			this.shipSlotInfoBindingSource.DataSource = typeof(AircraftCarrierSlotSolver.ShipSlotInfo);
 			// 
 			// MainForm
 			// 
