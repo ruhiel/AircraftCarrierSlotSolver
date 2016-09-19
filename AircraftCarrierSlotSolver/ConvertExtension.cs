@@ -8,7 +8,6 @@ namespace AircraftCarrierSlotSolver
 {
 	public static class ConvertExtension
 	{
-
 		/// <summary>
 		/// DictionaryをKeyAndValueのListに変換する
 		/// </summary>
@@ -19,9 +18,8 @@ namespace AircraftCarrierSlotSolver
 		public static List<KeyAndValue<TKey, TValue>>
 			ConvertDictionaryToList<TKey, TValue>(this Dictionary<TKey, TValue> dic)
 		{
-			List<KeyAndValue<TKey, TValue>> lst =
-				new List<KeyAndValue<TKey, TValue>>();
-			foreach (KeyValuePair<TKey, TValue> pair in dic)
+			var lst = new List<KeyAndValue<TKey, TValue>>();
+			foreach (var pair in dic)
 			{
 				lst.Add(new KeyAndValue<TKey, TValue>(pair));
 			}
@@ -38,8 +36,8 @@ namespace AircraftCarrierSlotSolver
 		public static Dictionary<TKey, TValue>
 			ConvertListToDictionary<TKey, TValue>(this List<KeyAndValue<TKey, TValue>> lst)
 		{
-			Dictionary<TKey, TValue> dic = new Dictionary<TKey, TValue>();
-			foreach (KeyAndValue<TKey, TValue> pair in lst)
+			var dic = new Dictionary<TKey, TValue>();
+			foreach (var pair in lst)
 			{
 				dic.Add(pair.Key, pair.Value);
 			}

@@ -8,11 +8,29 @@ namespace AircraftCarrierSlotSolver
 {
 	public class AirCraft
 	{
+		/// <summary>
+		/// 名称
+		/// </summary>
 		public string Name { get; set; }
+		/// <summary>
+		/// 種別
+		/// </summary>
 		public string Type { get; set; }
+		/// <summary>
+		/// 火力
+		/// </summary>
 		public int FirePower { get; set; }
+		/// <summary>
+		/// 対空
+		/// </summary>
 		public int AA { get; set; }
+		/// <summary>
+		/// 爆装
+		/// </summary>
 		public int Bomber { get; set; }
+		/// <summary>
+		/// 雷装
+		/// </summary>
 		public int Torpedo { get; set; }
 		/// <summary>
 		/// 命中
