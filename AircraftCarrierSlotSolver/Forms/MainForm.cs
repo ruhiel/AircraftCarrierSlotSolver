@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -114,6 +115,11 @@ namespace AircraftCarrierSlotSolver
 			item.Slot3 = string.Empty;
 			item.Slot4Num = ship.Slot4Num;
 			item.Slot4 = string.Empty;
+			foreach(DataGridViewCell cell in ShipSlotInfoDataGridView.Rows[rowIndex].Cells)
+			{
+				cell.Style.BackColor = Color.White;
+			}
+
 			ShipSlotInfoDataGridView.InvalidateRow(rowIndex);
 		}
 
@@ -140,6 +146,11 @@ namespace AircraftCarrierSlotSolver
 				{
 					var item = ShipSlotInfoDataGridView.Rows[i].DataBoundItem as ShipSlotInfo;
 					item.Slot1 = item.Slot2 = item.Slot3 = item.Slot4 = string.Empty;
+					foreach (DataGridViewCell cell in ShipSlotInfoDataGridView.Rows[i].Cells)
+					{
+						cell.Style.BackColor = Color.White;
+					}
+
 					ShipSlotInfoDataGridView.InvalidateRow(i);
 					shipSlotList.Add(item);
 				}
@@ -227,21 +238,53 @@ namespace AircraftCarrierSlotSolver
 				if( generatorInfo.Slot.Item2 == 0)
 				{
 					rowItem.Item1.Slot1 = generatorInfo.AirCraft.Item1.Name;
+
+					ShipSlotInfoDataGridView.Rows[rowItem.Item2].Cells["slot1DataGridViewTextBoxColumn"].Style.BackColor = GetBackColor(generatorInfo.AirCraft.Item1);
 				}
 				else if (generatorInfo.Slot.Item2 == 1)
 				{
 					rowItem.Item1.Slot2 = generatorInfo.AirCraft.Item1.Name;
+
+					ShipSlotInfoDataGridView.Rows[rowItem.Item2].Cells["slot2DataGridViewTextBoxColumn"].Style.BackColor = GetBackColor(generatorInfo.AirCraft.Item1);
+
 				}
 				else if (generatorInfo.Slot.Item2 == 2)
 				{
 					rowItem.Item1.Slot3 = generatorInfo.AirCraft.Item1.Name;
+
+					ShipSlotInfoDataGridView.Rows[rowItem.Item2].Cells["slot3DataGridViewTextBoxColumn"].Style.BackColor = GetBackColor(generatorInfo.AirCraft.Item1);
+
 				}
 				else if (generatorInfo.Slot.Item2 == 3)
 				{
 					rowItem.Item1.Slot4 = generatorInfo.AirCraft.Item1.Name;
+
+					ShipSlotInfoDataGridView.Rows[rowItem.Item2].Cells["slot4DataGridViewTextBoxColumn"].Style.BackColor = GetBackColor(generatorInfo.AirCraft.Item1);
+
 				}
 
 				ShipSlotInfoDataGridView.InvalidateRow(rowItem.Item2);
+			}
+		}
+
+		private Color GetBackColor(AirCraft aircraft)
+		{
+			if(aircraft.Name == "装備なし")
+			{
+				return Color.White;
+			}
+			switch(aircraft.Type)
+			{
+				case "艦戦":
+				case "水戦":
+				case "水爆":
+					return Color.LightGreen;
+				case "艦攻":
+					return Color.LightBlue;
+				case "艦爆":
+					return Color.LightCyan;
+				default:
+					return Color.White;
 			}
 		}
 
