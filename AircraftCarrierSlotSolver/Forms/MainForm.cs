@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace AircraftCarrierSlotSolver
@@ -62,7 +63,12 @@ namespace AircraftCarrierSlotSolver
 
 		private void AddButton_Click(object sender, EventArgs e)
 		{
-			this.shipSlotInfoBindingSource.Add(CreateShipSlotInfo(ShipSelectComboBox.SelectedValue.ToString()));
+			var newItem = ShipSelectComboBox.SelectedValue.ToString();
+			var ship = Regex.Replace(newItem, "改.*", string.Empty);
+			if(!GetRowItemList().Select(x => x.ShipName).Any(y => y.Contains(ship)))
+			{
+				this.shipSlotInfoBindingSource.Add(CreateShipSlotInfo(newItem));
+			}
 		}
 
 		private void ShipSlotInfoDataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -349,6 +355,18 @@ namespace AircraftCarrierSlotSolver
 			throw new Exception("艦名が見つかりません");
 		}
 
+		private List<ShipSlotInfo> GetRowItemList()
+		{
+			var list = new List<ShipSlotInfo>();
+
+			foreach(DataGridViewRow row in ShipSlotInfoDataGridView.Rows)
+			{
+				list.Add(row.DataBoundItem as ShipSlotInfo);
+			}
+
+			return list;
+		}
+
 		private void OutputStockCondition(StreamWriter writer, List<ShipSlotInfo> shipSlotList, Dictionary<string, int> condition)
 		{
 			foreach(var dic in condition)
@@ -488,6 +506,11 @@ namespace AircraftCarrierSlotSolver
 			ButtonEnableChange();
 		}
 
-		private void ButtonEnableChange() => CalcButton.Enabled = ShipSlotInfoDataGridView.RowCount != 0;
+		private void ButtonEnableChange()
+		{
+			CalcButton.Enabled = ShipSlotInfoDataGridView.RowCount != 0;
+
+			AddButton.Enabled = ShipSlotInfoDataGridView.RowCount < 6;
+		}
 	}
 }
