@@ -279,6 +279,7 @@ namespace AircraftCarrierSlotSolver
 			{
 				return Color.White;
 			}
+
 			switch(aircraft.Type)
 			{
 				case "艦戦":
@@ -325,16 +326,17 @@ namespace AircraftCarrierSlotSolver
 
 				Settings.LoadFromXmlFile();
 
+				// 水上機制限数
 				foreach(var noEquipShipList in GetIEnumerable(shipSlotList)
-				   .Where(x => x.Ship.Item1.Type == "巡洋艦" && x.AirCraft.Item1.Name == "装備なし")
-				   .GroupBy(y => y.Ship.Item2))
+					.Where(x => x.Ship.Item1.Type == "巡洋艦" && x.AirCraft.Item1.Name != "装備なし")
+					.GroupBy(y => y.Ship.Item2))
 				{
 					foreach(var noEquipList in noEquipShipList)
 					{
 						writer.WriteLine("+ " + noEquipList.SlotName);
 					}
 
-					writer.WriteLine(">= " + (4 - Settings.Instance.CruiserSlotNum));
+					writer.WriteLine("<= " + Settings.Instance.CruiserSlotNum);
 					writer.WriteLine();
 				}
 			}
@@ -439,7 +441,8 @@ namespace AircraftCarrierSlotSolver
 		{
 			var noEquip = new List<AirCraft>()
 			{
-				new AirCraft() { Name = "装備なし", Type = "水戦", AA = 0, FirePower = 0, Bomber = 0, Torpedo = 0, Evasion = 0, Accuracy = 0 }
+				// 所持数制限を受けないダミー装備
+				new AirCraft() { Name = "装備なし", Type = "その他", AA = 0, FirePower = 0, Bomber = 0, Torpedo = 0, Evasion = 0, Accuracy = 0 }
 			};	
 
 			foreach (var ship in _ShipInfoList
