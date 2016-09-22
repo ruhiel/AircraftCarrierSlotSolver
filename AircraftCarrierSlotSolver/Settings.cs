@@ -33,6 +33,19 @@ namespace AircraftCarrierSlotSolver
 			get; set;
 		}
 
+		/// <summary>
+		/// 前回の編成
+		/// </summary>
+		public List<string> HistoryShips
+		{
+			get;set;
+		}
+
+		/// <summary>
+		/// 前回の制空値
+		/// </summary>
+		public int HistoryAirSuperiority { get; set; }
+
 		//Settingsクラスのただ一つのインスタンス
 		[NonSerialized()]
 		private static Settings _instance;

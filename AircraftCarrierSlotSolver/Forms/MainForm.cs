@@ -57,8 +57,20 @@ namespace AircraftCarrierSlotSolver
 			{
 				Settings.Instance.AirCraftLimit = _AirCraftList.ToDictionary(x => x.Name, _ => 0).ConvertDictionaryToList();
 				Settings.Instance.CruiserSlotNum = 1;
+				Settings.Instance.HistoryShips = new List<string>();
+				Settings.Instance.HistoryAirSuperiority = 0;
 				Settings.SaveToXmlFile();
 			}
+
+			Settings.LoadFromXmlFile();
+
+			foreach(var newItem in Settings.Instance.HistoryShips)
+			{
+				shipSlotInfoBindingSource.Add(CreateShipSlotInfo(newItem));
+			}
+
+			AirSuperiorityNumericUpDown.Value = Settings.Instance.HistoryAirSuperiority;
+
 		}
 
 		private void AddButton_Click(object sender, EventArgs e)
@@ -67,7 +79,7 @@ namespace AircraftCarrierSlotSolver
 			var ship = Regex.Replace(newItem, "改.*", string.Empty);
 			if(!GetRowItemList().Select(x => x.ShipName).Any(y => y.Contains(ship)))
 			{
-				this.shipSlotInfoBindingSource.Add(CreateShipSlotInfo(newItem));
+				shipSlotInfoBindingSource.Add(CreateShipSlotInfo(newItem));
 			}
 		}
 
@@ -271,6 +283,14 @@ namespace AircraftCarrierSlotSolver
 
 				ShipSlotInfoDataGridView.InvalidateRow(rowItem.Item2);
 			}
+
+			Settings.LoadFromXmlFile();
+
+			Settings.Instance.HistoryShips = GetRowItemList().Select(x => x.ShipName).ToList();
+
+			Settings.Instance.HistoryAirSuperiority = (int)AirSuperiorityNumericUpDown.Value;
+
+			Settings.SaveToXmlFile();
 		}
 
 		private Color GetBackColor(AirCraft aircraft)
