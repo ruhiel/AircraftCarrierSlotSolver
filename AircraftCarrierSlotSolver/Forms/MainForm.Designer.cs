@@ -39,6 +39,7 @@
 			this.ShipSelectComboBox = new System.Windows.Forms.ComboBox();
 			this.AirSuperiorityLabel = new System.Windows.Forms.Label();
 			this.AirSuperiorityNumericUpDown = new System.Windows.Forms.NumericUpDown();
+			this.shipSlotInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.shipNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.slot1NumDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.slot1DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,7 +49,7 @@
 			this.slot3DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.slot4NumDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.slot4DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.shipSlotInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.Mode = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.ShipSlotInfoDataGridView)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AirSuperiorityNumericUpDown)).BeginInit();
@@ -70,12 +71,13 @@
             this.slot3NumDataGridViewTextBoxColumn,
             this.slot3DataGridViewTextBoxColumn,
             this.slot4NumDataGridViewTextBoxColumn,
-            this.slot4DataGridViewTextBoxColumn});
+            this.slot4DataGridViewTextBoxColumn,
+            this.Mode});
 			this.ShipSlotInfoDataGridView.DataSource = this.shipSlotInfoBindingSource;
 			this.ShipSlotInfoDataGridView.Location = new System.Drawing.Point(12, 69);
 			this.ShipSlotInfoDataGridView.Name = "ShipSlotInfoDataGridView";
 			this.ShipSlotInfoDataGridView.RowTemplate.Height = 21;
-			this.ShipSlotInfoDataGridView.Size = new System.Drawing.Size(885, 180);
+			this.ShipSlotInfoDataGridView.Size = new System.Drawing.Size(979, 180);
 			this.ShipSlotInfoDataGridView.TabIndex = 0;
 			this.ShipSlotInfoDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.ShipSlotInfoDataGridView_CellEndEdit);
 			this.ShipSlotInfoDataGridView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.ShipSlotInfoDataGridView_EditingControlShowing);
@@ -109,7 +111,7 @@
             this.settingToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(920, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(997, 24);
 			this.menuStrip1.TabIndex = 3;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -165,6 +167,10 @@
 			this.AirSuperiorityNumericUpDown.Name = "AirSuperiorityNumericUpDown";
 			this.AirSuperiorityNumericUpDown.Size = new System.Drawing.Size(53, 19);
 			this.AirSuperiorityNumericUpDown.TabIndex = 6;
+			// 
+			// shipSlotInfoBindingSource
+			// 
+			this.shipSlotInfoBindingSource.DataSource = typeof(AircraftCarrierSlotSolver.ShipSlotInfo);
 			// 
 			// shipNameDataGridViewTextBoxColumn
 			// 
@@ -239,15 +245,18 @@
 			this.slot4DataGridViewTextBoxColumn.ReadOnly = true;
 			this.slot4DataGridViewTextBoxColumn.Width = 150;
 			// 
-			// shipSlotInfoBindingSource
+			// Mode
 			// 
-			this.shipSlotInfoBindingSource.DataSource = typeof(AircraftCarrierSlotSolver.ShipSlotInfo);
+			this.Mode.DataPropertyName = "Mode";
+			this.Mode.HeaderText = "モード";
+			this.Mode.Name = "Mode";
+			this.Mode.Width = 90;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(920, 261);
+			this.ClientSize = new System.Drawing.Size(997, 261);
 			this.Controls.Add(this.AirSuperiorityNumericUpDown);
 			this.Controls.Add(this.AirSuperiorityLabel);
 			this.Controls.Add(this.ShipSelectComboBox);
@@ -293,6 +302,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn slot3DataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn slot4NumDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn slot4DataGridViewTextBoxColumn;
+		private System.Windows.Forms.DataGridViewComboBoxColumn Mode;
 	}
 }
 

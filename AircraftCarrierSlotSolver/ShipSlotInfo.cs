@@ -17,5 +17,6 @@ namespace AircraftCarrierSlotSolver
 		public int Slot3Num { get; set; }
 		public string Slot4 { get; set; }
 		public int Slot4Num { get; set; }
+		public string Mode { get; set; }
 	}
 }

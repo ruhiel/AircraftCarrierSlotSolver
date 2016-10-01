@@ -17,6 +17,10 @@ namespace AircraftCarrierSlotSolver
 		/// </summary>
 		public string Type { get; set; }
 		/// <summary>
+		/// 攻撃可能か
+		/// </summary>
+		public bool Attackable => Type == "艦攻" || Type == "艦爆";
+		/// <summary>
 		/// 火力
 		/// </summary>
 		public int FirePower { get; set; }

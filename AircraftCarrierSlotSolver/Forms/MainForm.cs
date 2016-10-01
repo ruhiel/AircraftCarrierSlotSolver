@@ -71,6 +71,8 @@ namespace AircraftCarrierSlotSolver
 
 			AirSuperiorityNumericUpDown.Value = Settings.Instance.HistoryAirSuperiority;
 
+			column = ShipSlotInfoDataGridView.Columns[9] as DataGridViewComboBoxColumn;
+			column.DataSource = new List<string>() { "制限なし", "攻撃", "彩雲", "熟練整備員" };
 		}
 
 		private void AddButton_Click(object sender, EventArgs e)
@@ -150,7 +152,8 @@ namespace AircraftCarrierSlotSolver
 				Slot1Num = ship.Slot1Num,
 				Slot2Num = ship.Slot2Num,
 				Slot3Num = ship.Slot3Num,
-				Slot4Num = ship.Slot4Num
+				Slot4Num = ship.Slot4Num,
+				Mode = "制限なし"
 			};
 		}
 
@@ -184,6 +187,8 @@ namespace AircraftCarrierSlotSolver
 				OutputStockCondition(writer, shipSlotList, Settings.Instance.AirCraftLimit.ConvertListToDictionary());
 
 				OutputShipTypeCondition(writer, shipSlotList);
+
+				OutputModeCondition(writer, shipSlotList);
 
 				OutputBinary(writer, shipSlotList);
 
@@ -420,7 +425,7 @@ namespace AircraftCarrierSlotSolver
 
 			foreach(var record in GetIEnumerable(shipSlotList))
 			{
-				if(record.AirCraft.Item1.Type == "艦爆" || record.AirCraft.Item1.Type == "艦攻")
+				if(record.AirCraft.Item1.Type == "艦爆" || record.AirCraft.Item1.Type == "艦攻" || record.AirCraft.Item1.Type ==  "その他")
 				{
 					var text = "+ " + record.Power + " " + record.SlotName + @" \ " + record.Ship.Item1.Name + " " + record.Slot.Item1 + " " + record.AirCraft.Item1.Name;
 					writer.WriteLine(text);
@@ -453,6 +458,38 @@ namespace AircraftCarrierSlotSolver
 					writer.WriteLine(text);
 				}
 				writer.WriteLine("= 1");
+				writer.WriteLine();
+			}
+		}
+
+		private void OutputModeCondition(StreamWriter writer, List<ShipSlotInfo> shipSlotList)
+		{
+			var list = GetIEnumerable(shipSlotList);
+			foreach(var info in shipSlotList.Where(x => x.Mode == "攻撃"))
+			{
+				foreach (var i in list.Where(x => x.Ship.Item1.Name == info.ShipName && x.AirCraft.Item1.Attackable))
+				{
+					var text = "+ " + i.SlotName + @" \ 攻撃機";
+					writer.WriteLine(text);
+				}
+				writer.WriteLine(">= 1");
+				writer.WriteLine();
+			}
+
+			OutputEquipCondition(writer, shipSlotList, "彩雲");
+
+			OutputEquipCondition(writer, shipSlotList, "熟練整備員");
+		}
+
+		private void OutputEquipCondition(StreamWriter writer, List<ShipSlotInfo> shipSlotList, string equipName)
+		{
+			var list = GetIEnumerable(shipSlotList);
+			foreach (var info in shipSlotList.Where(x => x.Mode == equipName))
+			{
+				var min = new[] { info.Slot1Num, info.Slot2Num, info.Slot3Num, info.Slot4Num }.Min();
+
+				var saiun = list.Where(x => x.Slot.Item1 == min && x.AirCraft.Item1.Name == equipName).First();
+				writer.WriteLine("+ " + saiun.SlotName + @" = 1 \ " + equipName);
 				writer.WriteLine();
 			}
 		}
