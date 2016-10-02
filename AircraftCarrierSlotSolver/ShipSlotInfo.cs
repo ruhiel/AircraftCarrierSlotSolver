@@ -17,6 +17,10 @@ namespace AircraftCarrierSlotSolver
 		public int Slot3Num { get; set; }
 		public string Slot4 { get; set; }
 		public int Slot4Num { get; set; }
-		public string Mode { get; set; }
+		public int MinSlotNum => new[] { Slot1Num, Slot2Num, Slot3Num, Slot4Num }.Min();
+		public bool Attack { get; set; }
+		public bool Saiun { get; set; }
+		public bool MaintenancePersonnel { get; set; }
+		public bool MinimumSlot { get; set; }
 	}
 }

@@ -66,6 +66,12 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ShipSlotInfoSettingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ShipSlotInfoSettingForm.Designer.cs">
+      <DependentUpon>ShipSlotInfoSettingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="GeneratorInfo.cs" />
     <Compile Include="KeyAndValue.cs" />
     <Compile Include="Program.cs" />
@@ -79,6 +85,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ShipSlotInfoSettingForm.resx">
+      <DependentUpon>ShipSlotInfoSettingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -70,9 +70,6 @@ namespace AircraftCarrierSlotSolver
 			}
 
 			AirSuperiorityNumericUpDown.Value = Settings.Instance.HistoryAirSuperiority;
-
-			column = ShipSlotInfoDataGridView.Columns[9] as DataGridViewComboBoxColumn;
-			column.DataSource = new List<string>() { "制限なし", "攻撃", "彩雲", "熟練整備員" };
 		}
 
 		private void AddButton_Click(object sender, EventArgs e)
@@ -153,7 +150,10 @@ namespace AircraftCarrierSlotSolver
 				Slot2Num = ship.Slot2Num,
 				Slot3Num = ship.Slot3Num,
 				Slot4Num = ship.Slot4Num,
-				Mode = "制限なし"
+				Attack = false,
+				Saiun = false,
+				MaintenancePersonnel = false,
+				MinimumSlot = false
 			};
 		}
 
@@ -465,7 +465,7 @@ namespace AircraftCarrierSlotSolver
 		private void OutputModeCondition(StreamWriter writer, List<ShipSlotInfo> shipSlotList)
 		{
 			var list = GetIEnumerable(shipSlotList);
-			foreach(var info in shipSlotList.Where(x => x.Mode == "攻撃"))
+			foreach(var info in shipSlotList.Where(x => x.Attack))
 			{
 				foreach (var i in list.Where(x => x.Ship.Item1.Name == info.ShipName && x.AirCraft.Item1.Attackable))
 				{
@@ -476,20 +476,39 @@ namespace AircraftCarrierSlotSolver
 				writer.WriteLine();
 			}
 
-			OutputEquipCondition(writer, shipSlotList, "彩雲");
-
-			OutputEquipCondition(writer, shipSlotList, "熟練整備員");
+			OutputEquipCondition(writer, shipSlotList);
 		}
 
-		private void OutputEquipCondition(StreamWriter writer, List<ShipSlotInfo> shipSlotList, string equipName)
+		private void OutputEquipCondition(StreamWriter writer, List<ShipSlotInfo> shipSlotList)
 		{
 			var list = GetIEnumerable(shipSlotList);
-			foreach (var info in shipSlotList.Where(x => x.Mode == equipName))
+			foreach (var info in shipSlotList.Where(x => x.Saiun))
 			{
-				var min = new[] { info.Slot1Num, info.Slot2Num, info.Slot3Num, info.Slot4Num }.Min();
+				var min = info.MinSlotNum;
 
-				var saiun = list.Where(x => x.Slot.Item1 == min && x.AirCraft.Item1.Name == equipName).First();
-				writer.WriteLine("+ " + saiun.SlotName + @" = 1 \ " + equipName);
+				var saiun = list.Where(x => x.Slot.Item1 == min && x.AirCraft.Item1.Name == "彩雲").First();
+				writer.WriteLine("+ " + saiun.SlotName + @" = 1 \ " + "彩雲");
+				writer.WriteLine();
+			}
+
+			foreach (var info in shipSlotList.Where(x => x.MaintenancePersonnel))
+			{
+				var min = info.MinSlotNum;
+
+				var saiun = list.Where(x => x.Slot.Item1 == min && x.AirCraft.Item1.Name == "熟練整備員").First();
+				writer.WriteLine("+ " + saiun.SlotName + @" = 1 \ " + "熟練整備員");
+				writer.WriteLine();
+			}
+
+			foreach (var info in shipSlotList.Where(x => x.MinimumSlot))
+			{
+				var min = info.MinSlotNum;
+
+				foreach (var i in list.Where(x => x.Slot.Item1 == min && (x.AirCraft.Item1.Type == "艦攻" || x.AirCraft.Item1.Type == "艦爆")))
+				{
+					writer.WriteLine("+ " + i.SlotName + @" \ " + "最小スロット攻撃機");
+				}
+				writer.WriteLine("= 0");
 				writer.WriteLine();
 			}
 		}
@@ -571,6 +590,19 @@ namespace AircraftCarrierSlotSolver
 			CalcButton.Enabled = ShipSlotInfoDataGridView.RowCount != 0;
 
 			AddButton.Enabled = ShipSlotInfoDataGridView.RowCount < 6;
+		}
+
+		private void ShipSlotInfoDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			DataGridView dgv = (DataGridView)sender;
+			//"Button"列ならば、ボタンがクリックされた
+			if (dgv.Columns[e.ColumnIndex].Name == "SettingButton")
+			{
+				DataGridViewRow row = ShipSlotInfoDataGridView.Rows[e.RowIndex];
+
+				var form = new ShipSlotInfoSettingForm(row.DataBoundItem as ShipSlotInfo);
+				form.ShowDialog();
+			}
 		}
 	}
 }
