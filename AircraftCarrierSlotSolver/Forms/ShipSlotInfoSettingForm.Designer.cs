@@ -99,8 +99,11 @@
 			this.Controls.Add(this.MaintenancePersonnelCheckBox);
 			this.Controls.Add(this.SaiunCheckBox);
 			this.Controls.Add(this.AttackCheckBox);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "ShipSlotInfoSettingForm";
-			this.Text = "ShipSlotInfoSettingForm";
+			this.Text = "艦娘設定";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
