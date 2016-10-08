@@ -300,11 +300,6 @@ namespace AircraftCarrierSlotSolver
 
 		private Color GetBackColor(AirCraft aircraft)
 		{
-			if(aircraft.Name == "装備なし")
-			{
-				return Color.White;
-			}
-
 			switch(aircraft.Type)
 			{
 				case "艦戦":
@@ -322,33 +317,8 @@ namespace AircraftCarrierSlotSolver
 
 		private void OutputShipTypeCondition(StreamWriter writer, List<ShipSlotInfo> shipSlotList)
 		{
-			if(GetIEnumerable(shipSlotList).Any(x => x.Ship.Item1.Type == "空母"))
-			{
-				// 空母が1隻以上の場合
-				// 空母に水上機載せない
-				foreach (var record in GetIEnumerable(shipSlotList)
-					.Where(x => x.Ship.Item1.Type == "空母" && 
-						(x.AirCraft.Item1.Type == "水爆" || x.AirCraft.Item1.Type == "水戦")))
-				{
-					writer.WriteLine("+ " + record.SlotName);
-				}
-				writer.WriteLine("= 0");
-				writer.WriteLine();
-			}
-
 			if (GetIEnumerable(shipSlotList).Any(x => x.Ship.Item1.Type == "巡洋艦"))
 			{
-				// 巡洋艦が1隻以上の場合
-				// 巡洋艦に艦載機載せない
-				foreach (var record in GetIEnumerable(shipSlotList)
-					.Where(x => x.Ship.Item1.Type == "巡洋艦" &&
-						(x.AirCraft.Item1.Type == "艦戦" || x.AirCraft.Item1.Type == "艦爆" || x.AirCraft.Item1.Type == "艦攻")))
-				{
-					writer.WriteLine("+ " + record.SlotName);
-				}
-				writer.WriteLine("= 0");
-				writer.WriteLine();
-
 				Settings.LoadFromXmlFile();
 
 				// 水上機制限数
@@ -398,12 +368,16 @@ namespace AircraftCarrierSlotSolver
 		{
 			foreach(var dic in condition)
 			{
-				foreach (var record in GetIEnumerable(shipSlotList).Where(x => x.AirCraft.Item1.Name == dic.Key))
+				var list = GetIEnumerable(shipSlotList).Where(x => x.AirCraft.Item1.Name == dic.Key);
+				if(list.Any())
 				{
-					writer.WriteLine("+ " + record.SlotName);
+					foreach (var record in list)
+					{
+						writer.WriteLine("+ " + record.SlotName);
+					}
+					writer.WriteLine("<= " + dic.Value);
+					writer.WriteLine();
 				}
-				writer.WriteLine("<= " + dic.Value);
-				writer.WriteLine();
 			}
 
 		}
@@ -425,11 +399,8 @@ namespace AircraftCarrierSlotSolver
 
 			foreach(var record in GetIEnumerable(shipSlotList))
 			{
-				if(record.AirCraft.Item1.Type == "艦爆" || record.AirCraft.Item1.Type == "艦攻" || record.AirCraft.Item1.Type ==  "その他")
-				{
-					var text = "+ " + record.Power + " " + record.SlotName + @" \ " + record.Ship.Item1.Name + " " + record.Slot.Item1 + " " + record.AirCraft.Item1.Name;
-					writer.WriteLine(text);
-				}
+				var text = "+ " + record.Power + " " + record.SlotName + @" \ " + record.Ship.Item1.Name + " " + record.Slot.Item1 + " " + record.AirCraft.Item1.Name;
+				writer.WriteLine(text);
 			}
 
 			writer.WriteLine();
@@ -464,16 +435,20 @@ namespace AircraftCarrierSlotSolver
 
 		private void OutputModeCondition(StreamWriter writer, List<ShipSlotInfo> shipSlotList)
 		{
-			var list = GetIEnumerable(shipSlotList);
+			var infoList = GetIEnumerable(shipSlotList);
 			foreach(var info in shipSlotList.Where(x => x.Attack))
 			{
-				foreach (var i in list.Where(x => x.Ship.Item1.Name == info.ShipName && x.AirCraft.Item1.Attackable))
+				var list = infoList.Where(x => x.Ship.Item1.Name == info.ShipName && x.AirCraft.Item1.Attackable);
+				if(list.Any())
 				{
-					var text = "+ " + i.SlotName + @" \ 攻撃機";
-					writer.WriteLine(text);
+					foreach (var i in list)
+					{
+						var text = "+ " + i.SlotName + @" \ 攻撃機";
+						writer.WriteLine(text);
+					}
+					writer.WriteLine(">= 1");
+					writer.WriteLine();
 				}
-				writer.WriteLine(">= 1");
-				writer.WriteLine();
 			}
 
 			OutputEquipCondition(writer, shipSlotList);
@@ -481,12 +456,12 @@ namespace AircraftCarrierSlotSolver
 
 		private void OutputEquipCondition(StreamWriter writer, List<ShipSlotInfo> shipSlotList)
 		{
-			var list = GetIEnumerable(shipSlotList);
+			var infoList = GetIEnumerable(shipSlotList);
 			foreach (var info in shipSlotList.Where(x => x.Saiun))
 			{
 				var min = info.MinSlotNum;
 
-				var saiun = list.Where(x => x.Slot.Item1 == min && x.AirCraft.Item1.Name == "彩雲").First();
+				var saiun = infoList.Where(x => x.Slot.Item1 == min && x.AirCraft.Item1.Name == "彩雲").First();
 				writer.WriteLine("+ " + saiun.SlotName + @" = 1 \ " + "彩雲");
 				writer.WriteLine();
 			}
@@ -495,7 +470,7 @@ namespace AircraftCarrierSlotSolver
 			{
 				var min = info.MinSlotNum;
 
-				var saiun = list.Where(x => x.Slot.Item1 == min && x.AirCraft.Item1.Name == "熟練整備員").First();
+				var saiun = infoList.Where(x => x.Slot.Item1 == min && x.AirCraft.Item1.Name == "熟練整備員").First();
 				writer.WriteLine("+ " + saiun.SlotName + @" = 1 \ " + "熟練整備員");
 				writer.WriteLine();
 			}
@@ -503,13 +478,16 @@ namespace AircraftCarrierSlotSolver
 			foreach (var info in shipSlotList.Where(x => x.MinimumSlot))
 			{
 				var min = info.MinSlotNum;
-
-				foreach (var i in list.Where(x => x.Slot.Item1 == min && (x.AirCraft.Item1.Type == "艦攻" || x.AirCraft.Item1.Type == "艦爆")))
+				var list = infoList.Where(x => x.Slot.Item1 == min && (x.AirCraft.Item1.Type == "艦攻" || x.AirCraft.Item1.Type == "艦爆"));
+				if(list.Any())
 				{
-					writer.WriteLine("+ " + i.SlotName + @" \ " + "最小スロット攻撃機");
+					foreach (var i in list)
+					{
+						writer.WriteLine("+ " + i.SlotName + @" \ " + "最小スロット攻撃機");
+					}
+					writer.WriteLine("= 0");
+					writer.WriteLine();
 				}
-				writer.WriteLine("= 0");
-				writer.WriteLine();
 			}
 		}
 
@@ -527,12 +505,39 @@ namespace AircraftCarrierSlotSolver
 			{
 				foreach (var slot in ship.Item1.Slots.Select((item, index) => Tuple.Create(item, index)))
 				{
-					foreach (var aircraft in _AirCraftList.Concat(noEquip).Select((item , index) => Tuple.Create(item,index)))
+					foreach (var aircraft in GetAircraft(ship.Item1).Concat(noEquip).Select((item , index) => Tuple.Create(item,index)))
 					{
-						yield return new GeneratorInfo() { Ship = ship, Slot = slot, AirCraft = aircraft };
+						if(ship.Item1.SlotNum > slot.Item2)
+						{
+							yield return new GeneratorInfo() { Ship = ship, Slot = slot, AirCraft = aircraft };
+						}
+						else if(aircraft.Item1.Name == "装備なし")
+						{
+							yield return new GeneratorInfo() { Ship = ship, Slot = slot, AirCraft = aircraft };
+						}
 					}
 				}
 			}
+		}
+
+		private IEnumerable<AirCraft> GetAircraft(ShipInfo ship)
+		{
+			Func<AirCraft, bool> predicate = null;
+			switch(ship.Type)
+			{
+				case "揚陸":
+					predicate = (x) => x.Type == "艦戦" || x.Type == "その他";
+					break;
+				case "巡洋艦":
+				case "潜母":
+					predicate = (x) => x.Type == "水爆" || x.Type == "水戦" || x.Type == "その他";
+					break;
+				default:
+					predicate = (x) => x.Type == "艦攻" || x.Type == "艦爆" || x.Type == "艦戦" || x.Type == "その他";
+					break;
+			}
+
+			return _AirCraftList.Where(predicate);
 		}
 
 		private void airCraftSettingToolStripMenuItem_Click(object sender, EventArgs e)
