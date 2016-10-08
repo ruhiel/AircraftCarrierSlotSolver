@@ -64,7 +64,7 @@ namespace AircraftCarrierSlotSolver
 
 			Settings.LoadFromXmlFile();
 
-			foreach(var newItem in Settings.Instance.HistoryShips)
+			foreach (var newItem in Settings.Instance.HistoryShips)
 			{
 				shipSlotInfoBindingSource.Add(CreateShipSlotInfo(newItem));
 			}
@@ -76,7 +76,7 @@ namespace AircraftCarrierSlotSolver
 		{
 			var newItem = ShipSelectComboBox.SelectedValue.ToString();
 			var ship = Regex.Replace(newItem, "改.*", string.Empty);
-			if(!GetRowItemList().Select(x => x.ShipName).Any(y => y.Contains(ship)))
+			if (!GetRowItemList().Select(x => x.ShipName).Any(y => y.Contains(ship)))
 			{
 				shipSlotInfoBindingSource.Add(CreateShipSlotInfo(newItem));
 			}
@@ -119,7 +119,7 @@ namespace AircraftCarrierSlotSolver
 			var cb = sender as DataGridViewComboBoxEditingControl;
 			var item = ShipSlotInfoDataGridView.Rows[rowIndex].DataBoundItem as ShipSlotInfo;
 			var ship = _ShipInfoList.Where(x => x.Name == cb.SelectedItem?.ToString()).FirstOrDefault();
-			if(ship == null)
+			if (ship == null)
 			{
 				return;
 			}
@@ -132,7 +132,7 @@ namespace AircraftCarrierSlotSolver
 			item.Slot3 = string.Empty;
 			item.Slot4Num = ship.Slot4Num;
 			item.Slot4 = string.Empty;
-			foreach(DataGridViewCell cell in ShipSlotInfoDataGridView.Rows[rowIndex].Cells)
+			foreach (DataGridViewCell cell in ShipSlotInfoDataGridView.Rows[rowIndex].Cells)
 			{
 				cell.Style.BackColor = Color.White;
 			}
@@ -163,7 +163,7 @@ namespace AircraftCarrierSlotSolver
 
 			using (StreamWriter writer = new StreamWriter(@"slot.lp", false, new UTF8Encoding(false)))
 			{
-				for (int i = 0; i< ShipSlotInfoDataGridView.Rows.Count; i++)
+				for (int i = 0; i < ShipSlotInfoDataGridView.Rows.Count; i++)
 				{
 					var item = ShipSlotInfoDataGridView.Rows[i].DataBoundItem as ShipSlotInfo;
 					item.Slot1 = item.Slot2 = item.Slot3 = item.Slot4 = string.Empty;
@@ -211,7 +211,7 @@ namespace AircraftCarrierSlotSolver
 			{
 				var logFile = Path.Combine(dir, "result.log");
 
-				if(File.Exists(logFile))
+				if (File.Exists(logFile))
 				{
 					File.Delete(logFile);
 				}
@@ -228,14 +228,14 @@ namespace AircraftCarrierSlotSolver
 				process.WaitForExit();
 
 				var log = Path.Combine(dir, "result.log");
-				var regex = new System.Text.RegularExpressions.Regex(@"(?<slot>slot_\d+_\d_\d+).+");
+				var regex = new Regex(@"(?<slot>slot_\d+_\d_\d+).+");
 				using (StreamReader r = new StreamReader(log))
 				{
 					string line;
 					while ((line = r.ReadLine()) != null)
 					{
 						var matches = regex.Matches(line);
-						if(matches.Count > 0)
+						if (matches.Count > 0)
 						{
 							slotStringList.Add(matches[0].Groups["slot"].Value);
 						}
@@ -249,16 +249,16 @@ namespace AircraftCarrierSlotSolver
 				return;
 			}
 
-			if(!slotStringList.Any())
+			if (!slotStringList.Any())
 			{
 				MessageBox.Show("制空値を満たす解がありませんでした。");
 				return;
 			}
 
-			foreach(var generatorInfo in slotStringList.Select(x => GetIEnumerable(shipSlotList).First(y => y.SlotName == x)))
+			foreach (var generatorInfo in slotStringList.Select(x => GetIEnumerable(shipSlotList).First(y => y.SlotName == x)))
 			{
 				var rowItem = GetRowItem(generatorInfo.Ship.Item1.Name);
-				if( generatorInfo.Slot.Item2 == 0)
+				if (generatorInfo.Slot.Item2 == 0)
 				{
 					rowItem.Item1.Slot1 = generatorInfo.AirCraft.Item1.Name;
 
@@ -300,7 +300,7 @@ namespace AircraftCarrierSlotSolver
 
 		private Color GetBackColor(AirCraft aircraft)
 		{
-			switch(aircraft.Type)
+			switch (aircraft.Type)
 			{
 				case "艦戦":
 				case "水戦":
@@ -322,11 +322,11 @@ namespace AircraftCarrierSlotSolver
 				Settings.LoadFromXmlFile();
 
 				// 水上機制限数
-				foreach(var noEquipShipList in GetIEnumerable(shipSlotList)
+				foreach (var noEquipShipList in GetIEnumerable(shipSlotList)
 					.Where(x => x.Ship.Item1.Type == "巡洋艦" && x.AirCraft.Item1.Name != "装備なし")
 					.GroupBy(y => y.Ship.Item2))
 				{
-					foreach(var noEquipList in noEquipShipList)
+					foreach (var noEquipList in noEquipShipList)
 					{
 						writer.WriteLine("+ " + noEquipList.SlotName);
 					}
@@ -340,10 +340,10 @@ namespace AircraftCarrierSlotSolver
 
 		private Tuple<ShipSlotInfo, int> GetRowItem(string shipName)
 		{
-			for(int i = 0; i < ShipSlotInfoDataGridView.Rows.Count; i++)
+			for (int i = 0; i < ShipSlotInfoDataGridView.Rows.Count; i++)
 			{
 				var item = ShipSlotInfoDataGridView.Rows[i].DataBoundItem as ShipSlotInfo;
-				if(item.ShipName == shipName)
+				if (item.ShipName == shipName)
 				{
 					return Tuple.Create(item, i);
 				}
@@ -356,7 +356,7 @@ namespace AircraftCarrierSlotSolver
 		{
 			var list = new List<ShipSlotInfo>();
 
-			foreach(DataGridViewRow row in ShipSlotInfoDataGridView.Rows)
+			foreach (DataGridViewRow row in ShipSlotInfoDataGridView.Rows)
 			{
 				list.Add(row.DataBoundItem as ShipSlotInfo);
 			}
@@ -366,10 +366,10 @@ namespace AircraftCarrierSlotSolver
 
 		private void OutputStockCondition(StreamWriter writer, List<ShipSlotInfo> shipSlotList, Dictionary<string, int> condition)
 		{
-			foreach(var dic in condition)
+			foreach (var dic in condition)
 			{
 				var list = GetIEnumerable(shipSlotList).Where(x => x.AirCraft.Item1.Name == dic.Key);
-				if(list.Any())
+				if (list.Any())
 				{
 					foreach (var record in list)
 					{
@@ -397,7 +397,7 @@ namespace AircraftCarrierSlotSolver
 		{
 			writer.WriteLine("maximize");
 
-			foreach(var record in GetIEnumerable(shipSlotList))
+			foreach (var record in GetIEnumerable(shipSlotList))
 			{
 				var text = "+ " + record.Power + " " + record.SlotName + @" \ " + record.Ship.Item1.Name + " " + record.Slot.Item1 + " " + record.AirCraft.Item1.Name;
 				writer.WriteLine(text);
@@ -421,9 +421,9 @@ namespace AircraftCarrierSlotSolver
 
 		private void OutputSlotCondition(StreamWriter writer, List<ShipSlotInfo> shipSlotList)
 		{
-			foreach(var group in GetIEnumerable(shipSlotList).GroupBy(x => new {Ship = x.Ship.Item2, Slot = x.Slot.Item2}))
+			foreach (var group in GetIEnumerable(shipSlotList).GroupBy(x => new { Ship = x.Ship.Item2, Slot = x.Slot.Item2 }))
 			{
-				foreach(var g in group)
+				foreach (var g in group)
 				{
 					var text = "+ " + g.SlotName;
 					writer.WriteLine(text);
@@ -436,10 +436,10 @@ namespace AircraftCarrierSlotSolver
 		private void OutputModeCondition(StreamWriter writer, List<ShipSlotInfo> shipSlotList)
 		{
 			var infoList = GetIEnumerable(shipSlotList);
-			foreach(var info in shipSlotList.Where(x => x.Attack))
+			foreach (var info in shipSlotList.Where(x => x.Attack))
 			{
 				var list = infoList.Where(x => x.Ship.Item1.Name == info.ShipName && x.AirCraft.Item1.Attackable);
-				if(list.Any())
+				if (list.Any())
 				{
 					foreach (var i in list)
 					{
@@ -479,7 +479,7 @@ namespace AircraftCarrierSlotSolver
 			{
 				var min = info.MinSlotNum;
 				var list = infoList.Where(x => x.Slot.Item1 == min && (x.AirCraft.Item1.Type == "艦攻" || x.AirCraft.Item1.Type == "艦爆"));
-				if(list.Any())
+				if (list.Any())
 				{
 					foreach (var i in list)
 					{
@@ -497,7 +497,7 @@ namespace AircraftCarrierSlotSolver
 			{
 				// 所持数制限を受けないダミー装備
 				new AirCraft() { Name = "装備なし", Type = "その他", AA = 0, FirePower = 0, Bomber = 0, Torpedo = 0, Evasion = 0, Accuracy = 0 }
-			};	
+			};
 
 			foreach (var ship in _ShipInfoList
 				.Select((item, index) => Tuple.Create(item, index))
@@ -505,13 +505,13 @@ namespace AircraftCarrierSlotSolver
 			{
 				foreach (var slot in ship.Item1.Slots.Select((item, index) => Tuple.Create(item, index)))
 				{
-					foreach (var aircraft in GetAircraft(ship.Item1).Concat(noEquip).Select((item , index) => Tuple.Create(item,index)))
+					foreach (var aircraft in GetAircraft(ship.Item1).Concat(noEquip).Select((item, index) => Tuple.Create(item, index)))
 					{
-						if(ship.Item1.SlotNum > slot.Item2)
+						if (ship.Item1.SlotNum > slot.Item2)
 						{
 							yield return new GeneratorInfo() { Ship = ship, Slot = slot, AirCraft = aircraft };
 						}
-						else if(aircraft.Item1.Name == "装備なし")
+						else if (aircraft.Item1.Name == "装備なし")
 						{
 							yield return new GeneratorInfo() { Ship = ship, Slot = slot, AirCraft = aircraft };
 						}
@@ -523,7 +523,7 @@ namespace AircraftCarrierSlotSolver
 		private IEnumerable<AirCraft> GetAircraft(ShipInfo ship)
 		{
 			Func<AirCraft, bool> predicate = null;
-			switch(ship.Type)
+			switch (ship.Type)
 			{
 				case "揚陸":
 					predicate = (x) => x.Type == "艦戦" || x.Type == "その他";

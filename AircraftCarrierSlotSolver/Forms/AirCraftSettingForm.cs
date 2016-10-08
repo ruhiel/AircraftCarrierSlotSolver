@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AircraftCarrierSlotSolver.Forms
@@ -21,7 +16,7 @@ namespace AircraftCarrierSlotSolver.Forms
 		{
 			var list = new List<AirCraftSetting>();
 
-			foreach(DataGridViewRow row in AirCraftSettingDataGridView.Rows)
+			foreach (DataGridViewRow row in AirCraftSettingDataGridView.Rows)
 			{
 				var item = row.DataBoundItem as AirCraftSetting;
 				list.Add(item);
