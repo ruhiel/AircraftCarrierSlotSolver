@@ -528,6 +528,9 @@ namespace AircraftCarrierSlotSolver
 				case "揚陸":
 					predicate = (x) => x.Type == "艦戦" || x.Type == "その他";
 					break;
+				case "補給":
+					predicate = (x) => x.Type == "艦攻" || x.Type == "その他";
+					break;
 				case "巡洋艦":
 				case "潜母":
 					predicate = (x) => x.Type == "水爆" || x.Type == "水戦" || x.Type == "その他";
