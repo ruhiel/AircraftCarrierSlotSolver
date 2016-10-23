@@ -157,24 +157,31 @@ namespace AircraftCarrierSlotSolver
 			};
 		}
 
-		private void CalcButton_Click(object sender, EventArgs e)
+		private List<ShipSlotInfo> GetShipSlotInfoList()
 		{
 			var shipSlotList = new List<ShipSlotInfo>();
 
+			for (int i = 0; i < ShipSlotInfoDataGridView.Rows.Count; i++)
+			{
+				var item = ShipSlotInfoDataGridView.Rows[i].DataBoundItem as ShipSlotInfo;
+				item.Slot1 = item.Slot2 = item.Slot3 = item.Slot4 = string.Empty;
+				foreach (DataGridViewCell cell in ShipSlotInfoDataGridView.Rows[i].Cells)
+				{
+					cell.Style.BackColor = Color.White;
+				}
+
+				ShipSlotInfoDataGridView.InvalidateRow(i);
+				shipSlotList.Add(item);
+			}
+
+			return shipSlotList;
+		}
+
+		private void GenerateLPFile(List<ShipSlotInfo> shipSlotList)
+		{
 			using (StreamWriter writer = new StreamWriter(@"slot.lp", false, new UTF8Encoding(false)))
 			{
-				for (int i = 0; i < ShipSlotInfoDataGridView.Rows.Count; i++)
-				{
-					var item = ShipSlotInfoDataGridView.Rows[i].DataBoundItem as ShipSlotInfo;
-					item.Slot1 = item.Slot2 = item.Slot3 = item.Slot4 = string.Empty;
-					foreach (DataGridViewCell cell in ShipSlotInfoDataGridView.Rows[i].Cells)
-					{
-						cell.Style.BackColor = Color.White;
-					}
 
-					ShipSlotInfoDataGridView.InvalidateRow(i);
-					shipSlotList.Add(item);
-				}
 
 				OutputTarget(writer, shipSlotList);
 
@@ -195,7 +202,12 @@ namespace AircraftCarrierSlotSolver
 				writer.WriteLine("end");
 			}
 
-			var dir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+		}
+
+		private void GenerateSolveFile(string dir)
+		{
+			
 
 			using (StreamWriter writer = new StreamWriter(Path.Combine(dir, "solve.txt"), false, new UTF8Encoding(false)))
 			{
@@ -204,57 +216,50 @@ namespace AircraftCarrierSlotSolver
 				writer.WriteLine("display solution");
 				writer.WriteLine("quit");
 			}
+		}
 
+		private List<string> CalcProcess(string dir)
+		{
 			var slotStringList = new List<string>();
 
-			try
+			var logFile = Path.Combine(dir, "result.log");
+
+			if (File.Exists(logFile))
 			{
-				var logFile = Path.Combine(dir, "result.log");
+				File.Delete(logFile);
+			}
+			Settings.LoadFromXmlFile();
 
-				if (File.Exists(logFile))
+			var psi = new ProcessStartInfo();
+
+			psi.FileName = Settings.Instance.SolverPath;
+			psi.Arguments = "-b solve.txt" + " -l result.log";
+			psi.WorkingDirectory = dir;
+
+			var process = Process.Start(psi);
+
+			process.WaitForExit();
+
+			var log = Path.Combine(dir, "result.log");
+			var regex = new Regex(@"(?<slot>slot_\d+_\d_\d+).+");
+			using (StreamReader r = new StreamReader(log))
+			{
+				string line;
+				while ((line = r.ReadLine()) != null)
 				{
-					File.Delete(logFile);
-				}
-				Settings.LoadFromXmlFile();
-
-				var psi = new ProcessStartInfo();
-
-				psi.FileName = Settings.Instance.SolverPath;
-				psi.Arguments = "-b solve.txt" + " -l result.log";
-				psi.WorkingDirectory = dir;
-
-				var process = Process.Start(psi);
-
-				process.WaitForExit();
-
-				var log = Path.Combine(dir, "result.log");
-				var regex = new Regex(@"(?<slot>slot_\d+_\d_\d+).+");
-				using (StreamReader r = new StreamReader(log))
-				{
-					string line;
-					while ((line = r.ReadLine()) != null)
+					var matches = regex.Matches(line);
+					if (matches.Count > 0)
 					{
-						var matches = regex.Matches(line);
-						if (matches.Count > 0)
-						{
-							slotStringList.Add(matches[0].Groups["slot"].Value);
-						}
+						slotStringList.Add(matches[0].Groups["slot"].Value);
 					}
 				}
 			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("SCIPソルバーの実行に失敗しました。:" + ex.Message);
 
-				return;
-			}
+			return slotStringList;
+		}
 
-			if (!slotStringList.Any())
-			{
-				MessageBox.Show("制空値を満たす解がありませんでした。");
-				return;
-			}
-
+		private void CalcResultViewProcess(List<string> slotStringList, List<ShipSlotInfo> shipSlotList)
+		{
 			foreach (var generatorInfo in slotStringList.Select(x => GetIEnumerable(shipSlotList).First(y => y.SlotName == x)))
 			{
 				var rowItem = GetRowItem(generatorInfo.Ship.Item1.Name);
@@ -288,7 +293,10 @@ namespace AircraftCarrierSlotSolver
 
 				ShipSlotInfoDataGridView.InvalidateRow(rowItem.Item2);
 			}
+		}
 
+		private void SaveShipList()
+		{
 			Settings.LoadFromXmlFile();
 
 			Settings.Instance.HistoryShips = GetRowItemList().Select(x => x.ShipName).ToList();
@@ -296,6 +304,45 @@ namespace AircraftCarrierSlotSolver
 			Settings.Instance.HistoryAirSuperiority = (int)AirSuperiorityNumericUpDown.Value;
 
 			Settings.SaveToXmlFile();
+		}
+
+		private void Calc()
+		{
+			var shipSlotList = GetShipSlotInfoList();
+
+			GenerateLPFile(shipSlotList);
+
+			var dir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+			GenerateSolveFile(dir);
+
+			List<string> slotStringList;
+
+			try
+			{
+				slotStringList = CalcProcess(dir);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("SCIPソルバーの実行に失敗しました。:" + ex.Message);
+
+				return;
+			}
+
+			if (!slotStringList.Any())
+			{
+				MessageBox.Show("制空値を満たす解がありませんでした。");
+				return;
+			}
+
+			CalcResultViewProcess(slotStringList, shipSlotList);
+
+			SaveShipList();
+		}
+
+		private void CalcButton_Click(object sender, EventArgs e)
+		{
+			Calc();
 		}
 
 		private Color GetBackColor(AirCraft aircraft)
@@ -610,6 +657,7 @@ namespace AircraftCarrierSlotSolver
 
 				var form = new ShipSlotInfoSettingForm(row.DataBoundItem as ShipSlotInfo);
 				form.ShowDialog();
+				Calc();
 			}
 		}
 	}
