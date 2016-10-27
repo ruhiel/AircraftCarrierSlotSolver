@@ -55,7 +55,7 @@ namespace AircraftCarrierSlotSolver
 
 			if (!File.Exists(Properties.Resources.SettingFileName))
 			{
-				Settings.Instance.AirCraftLimit = _AirCraftList.ToDictionary(x => x.Name, _ => 0).ConvertDictionaryToList();
+				Settings.Instance.AirCraftLimit = _AirCraftList.ToDictionary(x => x.Name, _ => 0).ToList();
 				Settings.Instance.CruiserSlotNum = 1;
 				Settings.Instance.HistoryShips = new List<string>();
 				Settings.Instance.HistoryAirSuperiority = 0;
@@ -181,17 +181,13 @@ namespace AircraftCarrierSlotSolver
 		{
 			using (StreamWriter writer = new StreamWriter(@"slot.lp", false, new UTF8Encoding(false)))
 			{
-
-
 				OutputTarget(writer, shipSlotList);
 
 				OutputAirCondition(writer, shipSlotList);
 
 				OutputSlotCondition(writer, shipSlotList);
 
-				Settings.LoadFromXmlFile();
-
-				OutputStockCondition(writer, shipSlotList, Settings.Instance.AirCraftLimit.ConvertListToDictionary());
+				OutputStockCondition(writer, shipSlotList);
 
 				OutputShipTypeCondition(writer, shipSlotList);
 
@@ -201,14 +197,10 @@ namespace AircraftCarrierSlotSolver
 
 				writer.WriteLine("end");
 			}
-
-
 		}
 
 		private void GenerateSolveFile(string dir)
 		{
-			
-
 			using (StreamWriter writer = new StreamWriter(Path.Combine(dir, "solve.txt"), false, new UTF8Encoding(false)))
 			{
 				writer.WriteLine("read slot.lp");
@@ -308,19 +300,27 @@ namespace AircraftCarrierSlotSolver
 
 		private void Calc()
 		{
-			var shipSlotList = GetShipSlotInfoList();
-
-			GenerateLPFile(shipSlotList);
-
-			var dir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-
-			GenerateSolveFile(dir);
-
-			List<string> slotStringList;
-
 			try
 			{
-				slotStringList = CalcProcess(dir);
+				var shipSlotList = GetShipSlotInfoList();
+
+				GenerateLPFile(shipSlotList);
+
+				var dir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+				GenerateSolveFile(dir);
+
+				var slotStringList = CalcProcess(dir);
+
+				if (!slotStringList.Any())
+				{
+					MessageBox.Show("制空値を満たす解がありませんでした。");
+					return;
+				}
+
+				CalcResultViewProcess(slotStringList, shipSlotList);
+
+				SaveShipList();
 			}
 			catch (Exception ex)
 			{
@@ -328,22 +328,9 @@ namespace AircraftCarrierSlotSolver
 
 				return;
 			}
-
-			if (!slotStringList.Any())
-			{
-				MessageBox.Show("制空値を満たす解がありませんでした。");
-				return;
-			}
-
-			CalcResultViewProcess(slotStringList, shipSlotList);
-
-			SaveShipList();
 		}
 
-		private void CalcButton_Click(object sender, EventArgs e)
-		{
-			Calc();
-		}
+		private void CalcButton_Click(object sender, EventArgs e) => Calc();
 
 		private Color GetBackColor(AirCraft aircraft)
 		{
@@ -411,9 +398,11 @@ namespace AircraftCarrierSlotSolver
 			return list;
 		}
 
-		private void OutputStockCondition(StreamWriter writer, List<ShipSlotInfo> shipSlotList, Dictionary<string, int> condition)
+		private void OutputStockCondition(StreamWriter writer, List<ShipSlotInfo> shipSlotList)
 		{
-			foreach (var dic in condition)
+			Settings.LoadFromXmlFile();
+			
+			foreach (var dic in Settings.Instance.AirCraftLimit.ToDictionary())
 			{
 				var list = GetIEnumerable(shipSlotList).Where(x => x.AirCraft.Item1.Name == dic.Key);
 				if (list.Any())
@@ -546,6 +535,8 @@ namespace AircraftCarrierSlotSolver
 				new AirCraft() { Name = "装備なし", Type = "その他", AA = 0, FirePower = 0, Bomber = 0, Torpedo = 0, Evasion = 0, Accuracy = 0 }
 			};
 
+			Settings.LoadFromXmlFile();
+
 			foreach (var ship in _ShipInfoList
 				.Select((item, index) => Tuple.Create(item, index))
 				.Where(x => shipSlotList.Select(y => y.ShipName).Contains(x.Item1.Name)))
@@ -587,7 +578,7 @@ namespace AircraftCarrierSlotSolver
 					break;
 			}
 
-			return _AirCraftList.Where(predicate);
+			return _AirCraftList.Where(x => Settings.Instance.AirCraftLimit.ToDictionary()[x.Name] != 0).Where(predicate);
 		}
 
 		private void airCraftSettingToolStripMenuItem_Click(object sender, EventArgs e)
@@ -627,18 +618,11 @@ namespace AircraftCarrierSlotSolver
 					Settings.SaveToXmlFile();
 				}
 			}
-
 		}
 
-		private void ShipSlotInfoDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-		{
-			ButtonEnableChange();
-		}
+		private void ShipSlotInfoDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e) => ButtonEnableChange();
 
-		private void ShipSlotInfoDataGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
-		{
-			ButtonEnableChange();
-		}
+		private void ShipSlotInfoDataGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e) => ButtonEnableChange();
 
 		private void ButtonEnableChange()
 		{

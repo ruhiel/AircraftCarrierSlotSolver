@@ -24,7 +24,7 @@ namespace AircraftCarrierSlotSolver.Forms
 
 			Settings.LoadFromXmlFile();
 
-			Settings.Instance.AirCraftLimit = list.ToDictionary(x => x.Name, x => x.Value).ConvertDictionaryToList();
+			Settings.Instance.AirCraftLimit = list.ToDictionary(x => x.Name, x => x.Value).ToList();
 			Settings.Instance.CruiserSlotNum = (int)CruiserLimitNumericUpDown.Value;
 
 			Settings.SaveToXmlFile();

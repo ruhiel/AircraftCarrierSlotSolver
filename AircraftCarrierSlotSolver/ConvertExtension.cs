@@ -15,8 +15,7 @@ namespace AircraftCarrierSlotSolver
 		/// <typeparam name="TValue">Dictionaryの値の型</typeparam>
 		/// <param name="dic">変換するDictionary</param>
 		/// <returns>変換されたKeyAndValueのList</returns>
-		public static List<KeyAndValue<TKey, TValue>>
-			ConvertDictionaryToList<TKey, TValue>(this Dictionary<TKey, TValue> dic)
+		public static List<KeyAndValue<TKey, TValue>> ToList<TKey, TValue>(this Dictionary<TKey, TValue> dic)
 		{
 			var lst = new List<KeyAndValue<TKey, TValue>>();
 			foreach (var pair in dic)
@@ -33,8 +32,7 @@ namespace AircraftCarrierSlotSolver
 		/// <typeparam name="TValue">KeyAndValueのValueの型</typeparam>
 		/// <param name="lst">変換するKeyAndValueのList</param>
 		/// <returns>変換されたDictionary</returns>
-		public static Dictionary<TKey, TValue>
-			ConvertListToDictionary<TKey, TValue>(this List<KeyAndValue<TKey, TValue>> lst)
+		public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this List<KeyAndValue<TKey, TValue>> lst)
 		{
 			var dic = new Dictionary<TKey, TValue>();
 			foreach (var pair in lst)
