@@ -31,6 +31,7 @@ namespace AircraftCarrierSlotSolver
 		/// 攻撃可能か
 		/// </summary>
 		public bool Attackable => Type == "艦攻" || Type == "艦爆";
+
 		/// <summary>
 		/// 火力
 		/// </summary>
@@ -44,7 +45,25 @@ namespace AircraftCarrierSlotSolver
 		/// <summary>
 		/// 対空
 		/// </summary>
-		public int AA { get; set; }
+		public int AAValue { get; set; }
+
+		/// <summary>
+		/// 対空値
+		/// </summary>
+		public int AA {
+			get
+			{
+				switch(Type)
+				{
+					case "艦戦":
+						return (int)(AAValue + 0.2 * Improvement);
+					case "艦爆":
+						return (int)(AAValue + 0.25 * Improvement);
+					default:
+						return AAValue;
+				}
+			}
+		}
 		/// <summary>
 		/// 爆装
 		/// </summary>
@@ -72,7 +91,7 @@ namespace AircraftCarrierSlotSolver
 		{
 			Name = name;
 			Type = type;
-			AA = aa;
+			AAValue = aa;
 			Bomber = bomber;
 			Torpedo = torpedo;
 			Accuracy = accuracy;
