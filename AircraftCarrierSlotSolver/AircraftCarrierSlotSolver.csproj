@@ -54,6 +54,9 @@
     <Compile Include="AirCraftImprovementSetting.cs" />
     <Compile Include="AirCraftMap.cs" />
     <Compile Include="AirCraftSetting.cs" />
+    <Compile Include="Controls\DataGridViewVerticalScroll.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ConvertExtension.cs" />
     <Compile Include="Forms\AirCraftSettingForm.cs">
       <SubType>Form</SubType>

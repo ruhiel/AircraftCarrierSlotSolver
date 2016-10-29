@@ -29,70 +29,35 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.AirCraftSettingDataGridView = new System.Windows.Forms.DataGridView();
-			this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.airCraftSettingBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.OKButton = new System.Windows.Forms.Button();
 			this.CruiserLimitLabel = new System.Windows.Forms.Label();
 			this.CruiserLimitNumericUpDown = new System.Windows.Forms.NumericUpDown();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.AirCraftSettingDataGridView = new AircraftCarrierSlotSolver.Controls.DataGridViewVerticalScroll(this.components);
+			this.airCraftSettingBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.AirCraftComboBox = new System.Windows.Forms.ComboBox();
 			this.AddButton = new System.Windows.Forms.Button();
-			this.AirCraftImprovementSettingDataGridView = new System.Windows.Forms.DataGridView();
-			this.airCraftImprovementSettingBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.AirCraftImprovementSettingDataGridView = new AircraftCarrierSlotSolver.Controls.DataGridViewVerticalScroll(this.components);
 			this.nameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.improvementDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.valueDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			((System.ComponentModel.ISupportInitialize)(this.AirCraftSettingDataGridView)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.airCraftSettingBindingSource)).BeginInit();
+			this.airCraftImprovementSettingBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.CruiserLimitNumericUpDown)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.AirCraftSettingDataGridView)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.airCraftSettingBindingSource)).BeginInit();
 			this.tabPage2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AirCraftImprovementSettingDataGridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.airCraftImprovementSettingBindingSource)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// AirCraftSettingDataGridView
-			// 
-			this.AirCraftSettingDataGridView.AllowUserToAddRows = false;
-			this.AirCraftSettingDataGridView.AllowUserToDeleteRows = false;
-			this.AirCraftSettingDataGridView.AllowUserToResizeRows = false;
-			this.AirCraftSettingDataGridView.AutoGenerateColumns = false;
-			this.AirCraftSettingDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.AirCraftSettingDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nameDataGridViewTextBoxColumn,
-            this.valueDataGridViewTextBoxColumn});
-			this.AirCraftSettingDataGridView.DataSource = this.airCraftSettingBindingSource;
-			this.AirCraftSettingDataGridView.Location = new System.Drawing.Point(6, 10);
-			this.AirCraftSettingDataGridView.Name = "AirCraftSettingDataGridView";
-			this.AirCraftSettingDataGridView.RowTemplate.Height = 21;
-			this.AirCraftSettingDataGridView.Size = new System.Drawing.Size(306, 368);
-			this.AirCraftSettingDataGridView.TabIndex = 0;
-			// 
-			// nameDataGridViewTextBoxColumn
-			// 
-			this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-			this.nameDataGridViewTextBoxColumn.HeaderText = "艦載機";
-			this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-			this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-			this.nameDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.nameDataGridViewTextBoxColumn.Width = 150;
-			// 
-			// valueDataGridViewTextBoxColumn
-			// 
-			this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
-			this.valueDataGridViewTextBoxColumn.HeaderText = "制限数";
-			this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
-			this.valueDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.valueDataGridViewTextBoxColumn.Width = 60;
-			// 
-			// airCraftSettingBindingSource
-			// 
-			this.airCraftSettingBindingSource.DataSource = typeof(AircraftCarrierSlotSolver.AirCraftSetting);
 			// 
 			// OKButton
 			// 
@@ -132,7 +97,7 @@
 			this.tabControl1.Location = new System.Drawing.Point(12, 12);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(326, 406);
+			this.tabControl1.Size = new System.Drawing.Size(320, 406);
 			this.tabControl1.TabIndex = 4;
 			// 
 			// tabPage1
@@ -141,10 +106,33 @@
 			this.tabPage1.Location = new System.Drawing.Point(4, 22);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(318, 380);
+			this.tabPage1.Size = new System.Drawing.Size(312, 380);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "未改修";
 			this.tabPage1.UseVisualStyleBackColor = true;
+			// 
+			// AirCraftSettingDataGridView
+			// 
+			this.AirCraftSettingDataGridView.AllowUserToAddRows = false;
+			this.AirCraftSettingDataGridView.AllowUserToDeleteRows = false;
+			this.AirCraftSettingDataGridView.AllowUserToResizeRows = false;
+			this.AirCraftSettingDataGridView.AlwaysVScroll = true;
+			this.AirCraftSettingDataGridView.AutoGenerateColumns = false;
+			this.AirCraftSettingDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.AirCraftSettingDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nameDataGridViewTextBoxColumn,
+            this.valueDataGridViewTextBoxColumn});
+			this.AirCraftSettingDataGridView.DataSource = this.airCraftSettingBindingSource;
+			this.AirCraftSettingDataGridView.Location = new System.Drawing.Point(7, 10);
+			this.AirCraftSettingDataGridView.Name = "AirCraftSettingDataGridView";
+			this.AirCraftSettingDataGridView.RowHeadersVisible = false;
+			this.AirCraftSettingDataGridView.RowTemplate.Height = 21;
+			this.AirCraftSettingDataGridView.Size = new System.Drawing.Size(298, 368);
+			this.AirCraftSettingDataGridView.TabIndex = 0;
+			// 
+			// airCraftSettingBindingSource
+			// 
+			this.airCraftSettingBindingSource.DataSource = typeof(AircraftCarrierSlotSolver.AirCraftSetting);
 			// 
 			// tabPage2
 			// 
@@ -154,7 +142,7 @@
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(318, 380);
+			this.tabPage2.Size = new System.Drawing.Size(312, 380);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "改修済み";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -163,14 +151,14 @@
 			// 
 			this.AirCraftComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.AirCraftComboBox.FormattingEnabled = true;
-			this.AirCraftComboBox.Location = new System.Drawing.Point(14, 8);
+			this.AirCraftComboBox.Location = new System.Drawing.Point(8, 8);
 			this.AirCraftComboBox.Name = "AirCraftComboBox";
 			this.AirCraftComboBox.Size = new System.Drawing.Size(216, 20);
 			this.AirCraftComboBox.TabIndex = 2;
 			// 
 			// AddButton
 			// 
-			this.AddButton.Location = new System.Drawing.Point(237, 7);
+			this.AddButton.Location = new System.Drawing.Point(230, 7);
 			this.AddButton.Name = "AddButton";
 			this.AddButton.Size = new System.Drawing.Size(75, 23);
 			this.AddButton.TabIndex = 1;
@@ -183,6 +171,7 @@
 			this.AirCraftImprovementSettingDataGridView.AllowUserToAddRows = false;
 			this.AirCraftImprovementSettingDataGridView.AllowUserToResizeColumns = false;
 			this.AirCraftImprovementSettingDataGridView.AllowUserToResizeRows = false;
+			this.AirCraftImprovementSettingDataGridView.AlwaysVScroll = true;
 			this.AirCraftImprovementSettingDataGridView.AutoGenerateColumns = false;
 			this.AirCraftImprovementSettingDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.AirCraftImprovementSettingDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -190,16 +179,13 @@
             this.improvementDataGridViewTextBoxColumn,
             this.valueDataGridViewTextBoxColumn1});
 			this.AirCraftImprovementSettingDataGridView.DataSource = this.airCraftImprovementSettingBindingSource;
-			this.AirCraftImprovementSettingDataGridView.Location = new System.Drawing.Point(6, 40);
+			this.AirCraftImprovementSettingDataGridView.Location = new System.Drawing.Point(8, 40);
 			this.AirCraftImprovementSettingDataGridView.Name = "AirCraftImprovementSettingDataGridView";
+			this.AirCraftImprovementSettingDataGridView.RowHeadersVisible = false;
 			this.AirCraftImprovementSettingDataGridView.RowTemplate.Height = 21;
-			this.AirCraftImprovementSettingDataGridView.Size = new System.Drawing.Size(306, 334);
+			this.AirCraftImprovementSettingDataGridView.Size = new System.Drawing.Size(297, 334);
 			this.AirCraftImprovementSettingDataGridView.TabIndex = 0;
 			this.AirCraftImprovementSettingDataGridView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.AirCraftImprovementSettingDataGridView_CellValidating);
-			// 
-			// airCraftImprovementSettingBindingSource
-			// 
-			this.airCraftImprovementSettingBindingSource.DataSource = typeof(AircraftCarrierSlotSolver.AirCraftImprovementSetting);
 			// 
 			// nameDataGridViewTextBoxColumn1
 			// 
@@ -207,20 +193,51 @@
 			this.nameDataGridViewTextBoxColumn1.HeaderText = "艦載機";
 			this.nameDataGridViewTextBoxColumn1.Name = "nameDataGridViewTextBoxColumn1";
 			this.nameDataGridViewTextBoxColumn1.ReadOnly = true;
+			this.nameDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.nameDataGridViewTextBoxColumn1.Width = 153;
 			// 
 			// improvementDataGridViewTextBoxColumn
 			// 
 			this.improvementDataGridViewTextBoxColumn.DataPropertyName = "Improvement";
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.improvementDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
 			this.improvementDataGridViewTextBoxColumn.HeaderText = "改修値";
 			this.improvementDataGridViewTextBoxColumn.Name = "improvementDataGridViewTextBoxColumn";
-			this.improvementDataGridViewTextBoxColumn.Width = 70;
+			this.improvementDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.improvementDataGridViewTextBoxColumn.Width = 60;
 			// 
 			// valueDataGridViewTextBoxColumn1
 			// 
 			this.valueDataGridViewTextBoxColumn1.DataPropertyName = "Value";
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.valueDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
 			this.valueDataGridViewTextBoxColumn1.HeaderText = "装備数";
 			this.valueDataGridViewTextBoxColumn1.Name = "valueDataGridViewTextBoxColumn1";
-			this.valueDataGridViewTextBoxColumn1.Width = 70;
+			this.valueDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.valueDataGridViewTextBoxColumn1.Width = 65;
+			// 
+			// airCraftImprovementSettingBindingSource
+			// 
+			this.airCraftImprovementSettingBindingSource.DataSource = typeof(AircraftCarrierSlotSolver.AirCraftImprovementSetting);
+			// 
+			// nameDataGridViewTextBoxColumn
+			// 
+			this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+			this.nameDataGridViewTextBoxColumn.HeaderText = "艦載機";
+			this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+			this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+			this.nameDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.nameDataGridViewTextBoxColumn.Width = 216;
+			// 
+			// valueDataGridViewTextBoxColumn
+			// 
+			this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.valueDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+			this.valueDataGridViewTextBoxColumn.HeaderText = "制限数";
+			this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
+			this.valueDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.valueDataGridViewTextBoxColumn.Width = 60;
 			// 
 			// AirCraftSettingForm
 			// 
@@ -236,11 +253,11 @@
 			this.Name = "AirCraftSettingForm";
 			this.Text = "艦載機設定";
 			this.Load += new System.EventHandler(this.AirCraftSettingForm_Load);
-			((System.ComponentModel.ISupportInitialize)(this.AirCraftSettingDataGridView)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.airCraftSettingBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.CruiserLimitNumericUpDown)).EndInit();
 			this.tabControl1.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.AirCraftSettingDataGridView)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.airCraftSettingBindingSource)).EndInit();
 			this.tabPage2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.AirCraftImprovementSettingDataGridView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.airCraftImprovementSettingBindingSource)).EndInit();
@@ -251,22 +268,22 @@
 
 		#endregion
 
-		private System.Windows.Forms.DataGridView AirCraftSettingDataGridView;
+		private Controls.DataGridViewVerticalScroll AirCraftSettingDataGridView;
 		private System.Windows.Forms.Button OKButton;
 		private System.Windows.Forms.BindingSource airCraftSettingBindingSource;
 		private System.Windows.Forms.Label CruiserLimitLabel;
 		private System.Windows.Forms.NumericUpDown CruiserLimitNumericUpDown;
-		private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage tabPage1;
 		private System.Windows.Forms.TabPage tabPage2;
-		private System.Windows.Forms.DataGridView AirCraftImprovementSettingDataGridView;
+		private Controls.DataGridViewVerticalScroll AirCraftImprovementSettingDataGridView;
 		private System.Windows.Forms.BindingSource airCraftImprovementSettingBindingSource;
 		private System.Windows.Forms.Button AddButton;
 		private System.Windows.Forms.ComboBox AirCraftComboBox;
 		private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn improvementDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
 	}
 }
