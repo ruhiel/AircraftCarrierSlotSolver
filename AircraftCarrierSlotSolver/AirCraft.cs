@@ -12,6 +12,17 @@ namespace AircraftCarrierSlotSolver
 		/// 名称
 		/// </summary>
 		public string Name { get; set; }
+
+		/// <summary>
+		/// 艦載機名称
+		/// </summary>
+		public string AirCraftName
+		{
+			get
+			{
+				return Name + (Improvement == 0 ? string.Empty : string.Format("(★{0}", Improvement));
+			}
+		}
 		/// <summary>
 		/// 種別
 		/// </summary>
@@ -24,6 +35,12 @@ namespace AircraftCarrierSlotSolver
 		/// 火力
 		/// </summary>
 		public int FirePower { get; set; }
+
+		/// <summary>
+		/// 改修値
+		/// </summary>
+		public int Improvement { get; set; }
+
 		/// <summary>
 		/// 対空
 		/// </summary>
@@ -44,5 +61,23 @@ namespace AircraftCarrierSlotSolver
 		/// 回避
 		/// </summary>
 		public int Evasion { get; set; }
+
+
+		public AirCraft()
+		{
+			Improvement = 0;
+		}
+
+		public AirCraft(string name, string type, int firePower = 0, int aa = 0, int bomber = 0, int torpedo = 0, int accuracy = 0, int evasion = 0, int improvement = 0)
+		{
+			Name = name;
+			Type = type;
+			AA = aa;
+			Bomber = bomber;
+			Torpedo = torpedo;
+			Accuracy = accuracy;
+			Evasion = evasion;
+			Improvement = improvement;
+		}
 	}
 }

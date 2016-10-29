@@ -55,7 +55,7 @@ namespace AircraftCarrierSlotSolver
 
 			if (!File.Exists(Properties.Resources.SettingFileName))
 			{
-				Settings.Instance.AirCraftLimit = _AirCraftList.ToDictionary(x => x.Name, _ => 0).ToList();
+				Settings.Instance.AirCraftLimit = _AirCraftList.ToDictionary(x => x.AirCraftName, _ => 0).ToList();
 				Settings.Instance.CruiserSlotNum = 1;
 				Settings.Instance.HistoryShips = new List<string>();
 				Settings.Instance.HistoryAirSuperiority = 0;
@@ -257,27 +257,27 @@ namespace AircraftCarrierSlotSolver
 				var rowItem = GetRowItem(generatorInfo.Ship.Item1.Name);
 				if (generatorInfo.Slot.Item2 == 0)
 				{
-					rowItem.Item1.Slot1 = generatorInfo.AirCraft.Item1.Name;
+					rowItem.Item1.Slot1 = generatorInfo.AirCraft.Item1.AirCraftName;
 
 					ShipSlotInfoDataGridView.Rows[rowItem.Item2].Cells["slot1DataGridViewTextBoxColumn"].Style.BackColor = GetBackColor(generatorInfo.AirCraft.Item1);
 				}
 				else if (generatorInfo.Slot.Item2 == 1)
 				{
-					rowItem.Item1.Slot2 = generatorInfo.AirCraft.Item1.Name;
+					rowItem.Item1.Slot2 = generatorInfo.AirCraft.Item1.AirCraftName;
 
 					ShipSlotInfoDataGridView.Rows[rowItem.Item2].Cells["slot2DataGridViewTextBoxColumn"].Style.BackColor = GetBackColor(generatorInfo.AirCraft.Item1);
 
 				}
 				else if (generatorInfo.Slot.Item2 == 2)
 				{
-					rowItem.Item1.Slot3 = generatorInfo.AirCraft.Item1.Name;
+					rowItem.Item1.Slot3 = generatorInfo.AirCraft.Item1.AirCraftName;
 
 					ShipSlotInfoDataGridView.Rows[rowItem.Item2].Cells["slot3DataGridViewTextBoxColumn"].Style.BackColor = GetBackColor(generatorInfo.AirCraft.Item1);
 
 				}
 				else if (generatorInfo.Slot.Item2 == 3)
 				{
-					rowItem.Item1.Slot4 = generatorInfo.AirCraft.Item1.Name;
+					rowItem.Item1.Slot4 = generatorInfo.AirCraft.Item1.AirCraftName;
 
 					ShipSlotInfoDataGridView.Rows[rowItem.Item2].Cells["slot4DataGridViewTextBoxColumn"].Style.BackColor = GetBackColor(generatorInfo.AirCraft.Item1);
 
@@ -357,7 +357,7 @@ namespace AircraftCarrierSlotSolver
 
 				// 水上機制限数
 				foreach (var noEquipShipList in GetIEnumerable(shipSlotList)
-					.Where(x => x.Ship.Item1.Type == "巡洋艦" && x.AirCraft.Item1.Name != "装備なし")
+					.Where(x => x.Ship.Item1.Type == "巡洋艦" && x.AirCraft.Item1.AirCraftName != "装備なし")
 					.GroupBy(y => y.Ship.Item2))
 				{
 					foreach (var noEquipList in noEquipShipList)
@@ -404,7 +404,7 @@ namespace AircraftCarrierSlotSolver
 			
 			foreach (var dic in Settings.Instance.AirCraftLimit.ToDictionary())
 			{
-				var list = GetIEnumerable(shipSlotList).Where(x => x.AirCraft.Item1.Name == dic.Key);
+				var list = GetIEnumerable(shipSlotList).Where(x => x.AirCraft.Item1.AirCraftName == dic.Key);
 				if (list.Any())
 				{
 					foreach (var record in list)
@@ -423,7 +423,7 @@ namespace AircraftCarrierSlotSolver
 			writer.WriteLine("binary");
 			foreach (var record in GetIEnumerable(shipSlotList))
 			{
-				writer.WriteLine(record.SlotName + @" \ " + record.Ship.Item1.Name + " " + record.Slot.Item1 + " " + record.AirCraft.Item1.Name);
+				writer.WriteLine(record.SlotName + @" \ " + record.Ship.Item1.Name + " " + record.Slot.Item1 + " " + record.AirCraft.Item1.AirCraftName);
 			}
 			writer.WriteLine();
 
@@ -435,7 +435,7 @@ namespace AircraftCarrierSlotSolver
 
 			foreach (var record in GetIEnumerable(shipSlotList))
 			{
-				var text = "+ " + record.Power + " " + record.SlotName + @" \ " + record.Ship.Item1.Name + " " + record.Slot.Item1 + " " + record.AirCraft.Item1.Name;
+				var text = "+ " + record.Power + " " + record.SlotName + @" \ " + record.Ship.Item1.Name + " " + record.Slot.Item1 + " " + record.AirCraft.Item1.AirCraftName;
 				writer.WriteLine(text);
 			}
 
@@ -448,7 +448,7 @@ namespace AircraftCarrierSlotSolver
 
 			foreach (var record in GetIEnumerable(shipSlotList))
 			{
-				var text = "+ " + record.AirSuperiorityPotential + " " + record.SlotName + @" \ " + record.Ship.Item1.Name + " " + record.Slot.Item1 + " " + record.AirCraft.Item1.Name;
+				var text = "+ " + record.AirSuperiorityPotential + " " + record.SlotName + @" \ " + record.Ship.Item1.Name + " " + record.Slot.Item1 + " " + record.AirCraft.Item1.AirCraftName;
 				writer.WriteLine(text);
 			}
 			writer.WriteLine(">= " + AirSuperiorityNumericUpDown.Value);
@@ -497,7 +497,7 @@ namespace AircraftCarrierSlotSolver
 			{
 				var min = info.MinSlotNum;
 
-				var saiun = infoList.Where(x => x.Slot.Item1 == min && x.AirCraft.Item1.Name == "彩雲").First();
+				var saiun = infoList.Where(x => x.Slot.Item1 == min && x.AirCraft.Item1.AirCraftName == "彩雲").First();
 				writer.WriteLine("+ " + saiun.SlotName + @" = 1 \ " + "彩雲");
 				writer.WriteLine();
 			}
@@ -506,7 +506,7 @@ namespace AircraftCarrierSlotSolver
 			{
 				var min = info.MinSlotNum;
 
-				var saiun = infoList.Where(x => x.Slot.Item1 == min && x.AirCraft.Item1.Name == "熟練整備員").First();
+				var saiun = infoList.Where(x => x.Slot.Item1 == min && x.AirCraft.Item1.AirCraftName == "熟練整備員").First();
 				writer.WriteLine("+ " + saiun.SlotName + @" = 1 \ " + "熟練整備員");
 				writer.WriteLine();
 			}
@@ -532,7 +532,7 @@ namespace AircraftCarrierSlotSolver
 			var noEquip = new List<AirCraft>()
 			{
 				// 所持数制限を受けないダミー装備
-				new AirCraft() { Name = "装備なし", Type = "その他", AA = 0, FirePower = 0, Bomber = 0, Torpedo = 0, Evasion = 0, Accuracy = 0 }
+				new AirCraft("装備なし", "その他")
 			};
 
 			Settings.LoadFromXmlFile();
@@ -549,7 +549,7 @@ namespace AircraftCarrierSlotSolver
 						{
 							yield return new GeneratorInfo() { Ship = ship, Slot = slot, AirCraft = aircraft };
 						}
-						else if (aircraft.Item1.Name == "装備なし")
+						else if (aircraft.Item1.AirCraftName == "装備なし")
 						{
 							yield return new GeneratorInfo() { Ship = ship, Slot = slot, AirCraft = aircraft };
 						}
