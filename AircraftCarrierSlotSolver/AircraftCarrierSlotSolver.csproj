@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AirCraft.cs" />
+    <Compile Include="AirCraftImprovementSetting.cs" />
     <Compile Include="AirCraftMap.cs" />
     <Compile Include="AirCraftSetting.cs" />
     <Compile Include="ConvertExtension.cs" />
@@ -100,6 +101,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\AirCraftImprovementSetting.datasource" />
     <None Include="Properties\DataSources\AirCraftSetting.datasource" />
     <None Include="Properties\DataSources\ShipSlotInfo.datasource" />
     <None Include="Properties\Settings.settings">

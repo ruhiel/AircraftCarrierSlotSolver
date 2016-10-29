@@ -56,6 +56,7 @@ namespace AircraftCarrierSlotSolver
 			if (!File.Exists(Properties.Resources.SettingFileName))
 			{
 				Settings.Instance.AirCraftLimit = _AirCraftList.ToDictionary(x => x.AirCraftName, _ => 0).ToList();
+				Settings.Instance.AirCraftImprovementLimit = new List<KeyAndValue<string, KeyAndValue<int, int>>>();
 				Settings.Instance.CruiserSlotNum = 1;
 				Settings.Instance.HistoryShips = new List<string>();
 				Settings.Instance.HistoryAirSuperiority = 0;
@@ -415,7 +416,6 @@ namespace AircraftCarrierSlotSolver
 					writer.WriteLine();
 				}
 			}
-
 		}
 
 		private void OutputBinary(StreamWriter writer, List<ShipSlotInfo> shipSlotList)

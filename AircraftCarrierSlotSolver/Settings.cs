@@ -18,6 +18,14 @@ namespace AircraftCarrierSlotSolver
 		}
 
 		/// <summary>
+		/// 改修済み装備制限
+		/// </summary>
+		public List<KeyAndValue<string, KeyAndValue<int, int>>> AirCraftImprovementLimit
+		{
+			get; set;
+		}
+
+		/// <summary>
 		/// ソルバーファイルパス
 		/// </summary>
 		public string SolverPath
