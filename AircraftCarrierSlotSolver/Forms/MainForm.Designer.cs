@@ -29,6 +29,10 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.ShipSlotInfoDataGridView = new System.Windows.Forms.DataGridView();
 			this.AddButton = new System.Windows.Forms.Button();
 			this.CalcButton = new System.Windows.Forms.Button();
@@ -77,7 +81,7 @@
 			this.ShipSlotInfoDataGridView.Location = new System.Drawing.Point(12, 69);
 			this.ShipSlotInfoDataGridView.Name = "ShipSlotInfoDataGridView";
 			this.ShipSlotInfoDataGridView.RowTemplate.Height = 21;
-			this.ShipSlotInfoDataGridView.Size = new System.Drawing.Size(935, 180);
+			this.ShipSlotInfoDataGridView.Size = new System.Drawing.Size(953, 180);
 			this.ShipSlotInfoDataGridView.TabIndex = 0;
 			this.ShipSlotInfoDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ShipSlotInfoDataGridView_CellContentClick);
 			this.ShipSlotInfoDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.ShipSlotInfoDataGridView_CellEndEdit);
@@ -112,7 +116,7 @@
             this.settingToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(953, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(987, 24);
 			this.menuStrip1.TabIndex = 3;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -185,10 +189,13 @@
 			// slot1NumDataGridViewTextBoxColumn
 			// 
 			this.slot1NumDataGridViewTextBoxColumn.DataPropertyName = "Slot1Num";
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.slot1NumDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
 			this.slot1NumDataGridViewTextBoxColumn.HeaderText = "";
 			this.slot1NumDataGridViewTextBoxColumn.Name = "slot1NumDataGridViewTextBoxColumn";
 			this.slot1NumDataGridViewTextBoxColumn.ReadOnly = true;
-			this.slot1NumDataGridViewTextBoxColumn.Width = 30;
+			this.slot1NumDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.slot1NumDataGridViewTextBoxColumn.Width = 20;
 			// 
 			// slot1DataGridViewTextBoxColumn
 			// 
@@ -196,15 +203,18 @@
 			this.slot1DataGridViewTextBoxColumn.HeaderText = "スロット1";
 			this.slot1DataGridViewTextBoxColumn.Name = "slot1DataGridViewTextBoxColumn";
 			this.slot1DataGridViewTextBoxColumn.ReadOnly = true;
-			this.slot1DataGridViewTextBoxColumn.Width = 150;
+			this.slot1DataGridViewTextBoxColumn.Width = 155;
 			// 
 			// slot2NumDataGridViewTextBoxColumn
 			// 
 			this.slot2NumDataGridViewTextBoxColumn.DataPropertyName = "Slot2Num";
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.slot2NumDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
 			this.slot2NumDataGridViewTextBoxColumn.HeaderText = "";
 			this.slot2NumDataGridViewTextBoxColumn.Name = "slot2NumDataGridViewTextBoxColumn";
 			this.slot2NumDataGridViewTextBoxColumn.ReadOnly = true;
-			this.slot2NumDataGridViewTextBoxColumn.Width = 30;
+			this.slot2NumDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.slot2NumDataGridViewTextBoxColumn.Width = 20;
 			// 
 			// slot2DataGridViewTextBoxColumn
 			// 
@@ -212,15 +222,18 @@
 			this.slot2DataGridViewTextBoxColumn.HeaderText = "スロット2";
 			this.slot2DataGridViewTextBoxColumn.Name = "slot2DataGridViewTextBoxColumn";
 			this.slot2DataGridViewTextBoxColumn.ReadOnly = true;
-			this.slot2DataGridViewTextBoxColumn.Width = 150;
+			this.slot2DataGridViewTextBoxColumn.Width = 155;
 			// 
 			// slot3NumDataGridViewTextBoxColumn
 			// 
 			this.slot3NumDataGridViewTextBoxColumn.DataPropertyName = "Slot3Num";
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.slot3NumDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
 			this.slot3NumDataGridViewTextBoxColumn.HeaderText = "";
 			this.slot3NumDataGridViewTextBoxColumn.Name = "slot3NumDataGridViewTextBoxColumn";
 			this.slot3NumDataGridViewTextBoxColumn.ReadOnly = true;
-			this.slot3NumDataGridViewTextBoxColumn.Width = 30;
+			this.slot3NumDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.slot3NumDataGridViewTextBoxColumn.Width = 20;
 			// 
 			// slot3DataGridViewTextBoxColumn
 			// 
@@ -228,15 +241,18 @@
 			this.slot3DataGridViewTextBoxColumn.HeaderText = "スロット3";
 			this.slot3DataGridViewTextBoxColumn.Name = "slot3DataGridViewTextBoxColumn";
 			this.slot3DataGridViewTextBoxColumn.ReadOnly = true;
-			this.slot3DataGridViewTextBoxColumn.Width = 150;
+			this.slot3DataGridViewTextBoxColumn.Width = 155;
 			// 
 			// slot4NumDataGridViewTextBoxColumn
 			// 
 			this.slot4NumDataGridViewTextBoxColumn.DataPropertyName = "Slot4Num";
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.slot4NumDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
 			this.slot4NumDataGridViewTextBoxColumn.HeaderText = "";
 			this.slot4NumDataGridViewTextBoxColumn.Name = "slot4NumDataGridViewTextBoxColumn";
 			this.slot4NumDataGridViewTextBoxColumn.ReadOnly = true;
-			this.slot4NumDataGridViewTextBoxColumn.Width = 30;
+			this.slot4NumDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.slot4NumDataGridViewTextBoxColumn.Width = 20;
 			// 
 			// slot4DataGridViewTextBoxColumn
 			// 
@@ -244,7 +260,7 @@
 			this.slot4DataGridViewTextBoxColumn.HeaderText = "スロット4";
 			this.slot4DataGridViewTextBoxColumn.Name = "slot4DataGridViewTextBoxColumn";
 			this.slot4DataGridViewTextBoxColumn.ReadOnly = true;
-			this.slot4DataGridViewTextBoxColumn.Width = 150;
+			this.slot4DataGridViewTextBoxColumn.Width = 155;
 			// 
 			// SettingButton
 			// 
@@ -258,7 +274,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(953, 261);
+			this.ClientSize = new System.Drawing.Size(987, 261);
 			this.Controls.Add(this.AirSuperiorityNumericUpDown);
 			this.Controls.Add(this.AirSuperiorityLabel);
 			this.Controls.Add(this.ShipSelectComboBox);
