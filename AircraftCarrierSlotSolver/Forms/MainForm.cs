@@ -110,7 +110,6 @@ namespace AircraftCarrierSlotSolver
 			}
 		}
 
-
 		//DataGridViewに表示されているコンボボックスの
 		//SelectedIndexChangedイベントハンドラ
 		private void dataGridViewComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -281,7 +280,6 @@ namespace AircraftCarrierSlotSolver
 					rowItem.Item1.Slot4 = generatorInfo.AirCraft.Item1.AirCraftName;
 
 					ShipSlotInfoDataGridView.Rows[rowItem.Item2].Cells["slot4DataGridViewTextBoxColumn"].Style.BackColor = GetBackColor(generatorInfo.AirCraft.Item1);
-
 				}
 
 				ShipSlotInfoDataGridView.InvalidateRow(rowItem.Item2);
@@ -413,6 +411,23 @@ namespace AircraftCarrierSlotSolver
 						writer.WriteLine("+ " + record.SlotName);
 					}
 					writer.WriteLine("<= " + dic.Value);
+					writer.WriteLine();
+				}
+			}
+
+			foreach (var dic in Settings.Instance.AirCraftImprovementLimit)
+			{
+				var airCraft = new AirCraft(_AirCraftList.Find(x => x.Name == dic.Key));
+				airCraft.Improvement = dic.Value.Key;
+
+				var list = GetIEnumerable(shipSlotList).Where(x => x.AirCraft.Item1.AirCraftName == airCraft.AirCraftName);
+				if (list.Any())
+				{
+					foreach (var record in list)
+					{
+						writer.WriteLine("+ " + record.SlotName);
+					}
+					writer.WriteLine("<= " + dic.Value.Value);
 					writer.WriteLine();
 				}
 			}
@@ -578,7 +593,16 @@ namespace AircraftCarrierSlotSolver
 					break;
 			}
 
-			return _AirCraftList.Where(x => Settings.Instance.AirCraftLimit.ToDictionary()[x.Name] != 0).Where(predicate);
+			Settings.LoadFromXmlFile();
+
+			return _AirCraftList.Where(x => Settings.Instance.AirCraftLimit.ToDictionary()[x.Name] != 0)
+				.Concat(Settings.Instance.AirCraftImprovementLimit.Select(x =>
+					{
+						var airCraft = new AirCraft(_AirCraftList.Find(y => y.Name == x.Key));
+						airCraft.Improvement = x.Value.Key;
+						return airCraft;
+					}
+			)).Where(predicate);
 		}
 
 		private void airCraftSettingToolStripMenuItem_Click(object sender, EventArgs e)

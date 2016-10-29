@@ -20,7 +20,7 @@ namespace AircraftCarrierSlotSolver
 		{
 			get
 			{
-				return Name + (Improvement == 0 ? string.Empty : string.Format("(★{0}", Improvement));
+				return Name + (Improvement == 0 ? string.Empty : string.Format("(★{0})", Improvement));
 			}
 		}
 		/// <summary>
@@ -97,6 +97,18 @@ namespace AircraftCarrierSlotSolver
 			Accuracy = accuracy;
 			Evasion = evasion;
 			Improvement = improvement;
+		}
+
+		public AirCraft(AirCraft source)
+		{
+			Name = source.Name;
+			Type = source.Type;
+			AAValue = source.AAValue;
+			Bomber = source.Bomber;
+			Torpedo = source.Torpedo;
+			Accuracy = source.Accuracy;
+			Evasion = source.Evasion;
+			Improvement = source.Improvement;
 		}
 	}
 }
