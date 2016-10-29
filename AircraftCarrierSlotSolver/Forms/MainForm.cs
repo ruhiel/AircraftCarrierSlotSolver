@@ -400,7 +400,7 @@ namespace AircraftCarrierSlotSolver
 		private void OutputStockCondition(StreamWriter writer, List<ShipSlotInfo> shipSlotList)
 		{
 			Settings.LoadFromXmlFile();
-			
+
 			foreach (var dic in Settings.Instance.AirCraftLimit.ToDictionary())
 			{
 				var list = GetIEnumerable(shipSlotList).Where(x => x.AirCraft.Item1.AirCraftName == dic.Key);

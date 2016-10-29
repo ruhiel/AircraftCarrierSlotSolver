@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AircraftCarrierSlotSolver
+﻿namespace AircraftCarrierSlotSolver
 {
 	public class ShipInfo
 	{
@@ -40,6 +34,9 @@ namespace AircraftCarrierSlotSolver
 		/// スロット数4
 		/// </summary>
 		public int Slot4Num { get; set; }
+		/// <summary>
+		/// スロット数リスト
+		/// </summary>
 		public int[] Slots => new int[] { Slot1Num, Slot2Num, Slot3Num, Slot4Num };
 	}
 }

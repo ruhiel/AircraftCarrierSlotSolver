@@ -23,6 +23,12 @@ namespace AircraftCarrierSlotSolver
 		/// </summary>
 		public int Value { get; set; }
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		/// <param name="name">名称</param>
+		/// <param name="improvement">改修値</param>
+		/// <param name="value">設定値</param>
 		public AirCraftImprovementSetting(string name, int improvement, int value)
 		{
 			Name = name;
