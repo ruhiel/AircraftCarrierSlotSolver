@@ -18,5 +18,6 @@ namespace AircraftCarrierSlotSolver
 		public bool Saiun { get; set; }
 		public bool MaintenancePersonnel { get; set; }
 		public bool MinimumSlot { get; set; }
+		public bool FirstSlotAttack { get; set; }
 	}
 }

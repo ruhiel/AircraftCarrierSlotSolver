@@ -33,6 +33,7 @@
 			this.MaintenancePersonnelCheckBox = new System.Windows.Forms.CheckBox();
 			this.MinimumCheckBox = new System.Windows.Forms.CheckBox();
 			this.OKButton = new System.Windows.Forms.Button();
+			this.FirstSlotCheckBox = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// AttackCheckBox
@@ -81,7 +82,7 @@
 			// 
 			// OKButton
 			// 
-			this.OKButton.Location = new System.Drawing.Point(61, 110);
+			this.OKButton.Location = new System.Drawing.Point(64, 130);
 			this.OKButton.Name = "OKButton";
 			this.OKButton.Size = new System.Drawing.Size(75, 23);
 			this.OKButton.TabIndex = 1;
@@ -89,11 +90,23 @@
 			this.OKButton.UseVisualStyleBackColor = true;
 			this.OKButton.Click += new System.EventHandler(this.OKButton_Click);
 			// 
+			// FirstSlotCheckBox
+			// 
+			this.FirstSlotCheckBox.AutoSize = true;
+			this.FirstSlotCheckBox.Location = new System.Drawing.Point(12, 100);
+			this.FirstSlotCheckBox.Name = "FirstSlotCheckBox";
+			this.FirstSlotCheckBox.Size = new System.Drawing.Size(157, 16);
+			this.FirstSlotCheckBox.TabIndex = 2;
+			this.FirstSlotCheckBox.Text = "第一スロットに攻撃機を積む";
+			this.FirstSlotCheckBox.UseVisualStyleBackColor = true;
+			this.FirstSlotCheckBox.CheckedChanged += new System.EventHandler(this.FirstSlotCheckBox_CheckedChanged);
+			// 
 			// ShipSlotInfoSettingForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(210, 146);
+			this.ClientSize = new System.Drawing.Size(197, 165);
+			this.Controls.Add(this.FirstSlotCheckBox);
 			this.Controls.Add(this.OKButton);
 			this.Controls.Add(this.MinimumCheckBox);
 			this.Controls.Add(this.MaintenancePersonnelCheckBox);
@@ -116,5 +129,6 @@
 		private System.Windows.Forms.CheckBox MaintenancePersonnelCheckBox;
 		private System.Windows.Forms.CheckBox MinimumCheckBox;
 		private System.Windows.Forms.Button OKButton;
+		private System.Windows.Forms.CheckBox FirstSlotCheckBox;
 	}
 }

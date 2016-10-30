@@ -15,6 +15,7 @@ namespace AircraftCarrierSlotSolver.Forms
 			this.SaiunCheckBox.Checked = shipSlotInfo.Saiun;
 			this.MaintenancePersonnelCheckBox.Checked = shipSlotInfo.MaintenancePersonnel;
 			this.MinimumCheckBox.Checked = shipSlotInfo.MinimumSlot;
+			this.FirstSlotCheckBox.Checked = shipSlotInfo.FirstSlotAttack;
 		}
 
 		private void AttackCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -40,6 +41,11 @@ namespace AircraftCarrierSlotSolver.Forms
 		private void OKButton_Click(object sender, EventArgs e)
 		{
 			Close();
+		}
+
+		private void FirstSlotCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			shipSlotInfo.FirstSlotAttack = (sender as CheckBox).Checked;
 		}
 	}
 }
