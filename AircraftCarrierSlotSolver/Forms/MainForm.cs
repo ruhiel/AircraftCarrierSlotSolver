@@ -451,7 +451,11 @@ namespace AircraftCarrierSlotSolver
 
 			foreach (var record in GetIEnumerable(shipSlotList))
 			{
-				var text = "+ " + record.Power + " " + record.SlotName + @" \ " + record.Ship.Item1.Name + " " + record.Slot.Item1 + " " + record.AirCraft.Item1.AirCraftName;
+				var text = "+ " + record.Power + " " + record.SlotName + @" \ " + record.Ship.Item1.Name + " " + record.Slot.Item1 + " " + record.AirCraft.Item1.AirCraftName + " 火力";
+				writer.WriteLine(text);
+				text = "+ " + record.AirCraft.Item1.Accuracy + " " + record.SlotName + @" \ " + record.Ship.Item1.Name + " " + record.Slot.Item1 + " " + record.AirCraft.Item1.AirCraftName + " 命中";
+				writer.WriteLine(text);
+				text = "+ " + record.AirCraft.Item1.Evasion + " " + record.SlotName + @" \ " + record.Ship.Item1.Name + " " + record.Slot.Item1 + " " + record.AirCraft.Item1.AirCraftName + " 回避";
 				writer.WriteLine(text);
 			}
 
