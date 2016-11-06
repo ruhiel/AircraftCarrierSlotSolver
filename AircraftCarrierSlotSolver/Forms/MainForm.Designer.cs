@@ -29,11 +29,12 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.ShipSlotInfoDataGridView = new System.Windows.Forms.DataGridView();
+			this.SettingButton = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.AddButton = new System.Windows.Forms.Button();
 			this.CalcButton = new System.Windows.Forms.Button();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -43,7 +44,9 @@
 			this.ShipSelectComboBox = new System.Windows.Forms.ComboBox();
 			this.AirSuperiorityLabel = new System.Windows.Forms.Label();
 			this.AirSuperiorityNumericUpDown = new System.Windows.Forms.NumericUpDown();
-			this.SettingButton = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.AreaComboBox = new System.Windows.Forms.ComboBox();
+			this.SuperiorityButton = new System.Windows.Forms.Button();
+			this.SecureButton = new System.Windows.Forms.Button();
 			this.shipNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.slot1NumDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.slot1DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,10 +57,13 @@
 			this.slot4NumDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.slot4DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.shipSlotInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.MeringLabel = new System.Windows.Forms.Label();
+			this.MerginNumericUpDown = new System.Windows.Forms.NumericUpDown();
 			((System.ComponentModel.ISupportInitialize)(this.ShipSlotInfoDataGridView)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AirSuperiorityNumericUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.shipSlotInfoBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.MerginNumericUpDown)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ShipSlotInfoDataGridView
@@ -89,6 +95,14 @@
 			this.ShipSlotInfoDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.ShipSlotInfoDataGridView_RowsAdded);
 			this.ShipSlotInfoDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.ShipSlotInfoDataGridView_RowsRemoved);
 			// 
+			// SettingButton
+			// 
+			this.SettingButton.HeaderText = "設定";
+			this.SettingButton.Name = "SettingButton";
+			this.SettingButton.Text = "設定";
+			this.SettingButton.UseColumnTextForButtonValue = true;
+			this.SettingButton.Width = 50;
+			// 
 			// AddButton
 			// 
 			this.AddButton.Location = new System.Drawing.Point(139, 27);
@@ -102,7 +116,7 @@
 			// CalcButton
 			// 
 			this.CalcButton.Enabled = false;
-			this.CalcButton.Location = new System.Drawing.Point(361, 27);
+			this.CalcButton.Location = new System.Drawing.Point(359, 27);
 			this.CalcButton.Name = "CalcButton";
 			this.CalcButton.Size = new System.Drawing.Size(75, 23);
 			this.CalcButton.TabIndex = 2;
@@ -163,7 +177,7 @@
 			// 
 			// AirSuperiorityNumericUpDown
 			// 
-			this.AirSuperiorityNumericUpDown.Location = new System.Drawing.Point(291, 29);
+			this.AirSuperiorityNumericUpDown.Location = new System.Drawing.Point(291, 27);
 			this.AirSuperiorityNumericUpDown.Maximum = new decimal(new int[] {
             999,
             0,
@@ -173,13 +187,34 @@
 			this.AirSuperiorityNumericUpDown.Size = new System.Drawing.Size(53, 19);
 			this.AirSuperiorityNumericUpDown.TabIndex = 6;
 			// 
-			// SettingButton
+			// AreaComboBox
 			// 
-			this.SettingButton.HeaderText = "設定";
-			this.SettingButton.Name = "SettingButton";
-			this.SettingButton.Text = "設定";
-			this.SettingButton.UseColumnTextForButtonValue = true;
-			this.SettingButton.Width = 50;
+			this.AreaComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.AreaComboBox.FormattingEnabled = true;
+			this.AreaComboBox.Location = new System.Drawing.Point(453, 27);
+			this.AreaComboBox.Name = "AreaComboBox";
+			this.AreaComboBox.Size = new System.Drawing.Size(121, 20);
+			this.AreaComboBox.TabIndex = 7;
+			// 
+			// SuperiorityButton
+			// 
+			this.SuperiorityButton.Location = new System.Drawing.Point(580, 27);
+			this.SuperiorityButton.Name = "SuperiorityButton";
+			this.SuperiorityButton.Size = new System.Drawing.Size(75, 23);
+			this.SuperiorityButton.TabIndex = 8;
+			this.SuperiorityButton.Text = "優勢";
+			this.SuperiorityButton.UseVisualStyleBackColor = true;
+			this.SuperiorityButton.Click += new System.EventHandler(this.SuperiorityButton_Click);
+			// 
+			// SecureButton
+			// 
+			this.SecureButton.Location = new System.Drawing.Point(661, 27);
+			this.SecureButton.Name = "SecureButton";
+			this.SecureButton.Size = new System.Drawing.Size(75, 23);
+			this.SecureButton.TabIndex = 8;
+			this.SecureButton.Text = "確保";
+			this.SecureButton.UseVisualStyleBackColor = true;
+			this.SecureButton.Click += new System.EventHandler(this.SecureButton_Click);
 			// 
 			// shipNameDataGridViewTextBoxColumn
 			// 
@@ -193,8 +228,8 @@
 			// slot1NumDataGridViewTextBoxColumn
 			// 
 			this.slot1NumDataGridViewTextBoxColumn.DataPropertyName = "Slot1Num";
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.slot1NumDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.slot1NumDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle5;
 			this.slot1NumDataGridViewTextBoxColumn.HeaderText = "";
 			this.slot1NumDataGridViewTextBoxColumn.Name = "slot1NumDataGridViewTextBoxColumn";
 			this.slot1NumDataGridViewTextBoxColumn.ReadOnly = true;
@@ -212,8 +247,8 @@
 			// slot2NumDataGridViewTextBoxColumn
 			// 
 			this.slot2NumDataGridViewTextBoxColumn.DataPropertyName = "Slot2Num";
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.slot2NumDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.slot2NumDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle6;
 			this.slot2NumDataGridViewTextBoxColumn.HeaderText = "";
 			this.slot2NumDataGridViewTextBoxColumn.Name = "slot2NumDataGridViewTextBoxColumn";
 			this.slot2NumDataGridViewTextBoxColumn.ReadOnly = true;
@@ -231,8 +266,8 @@
 			// slot3NumDataGridViewTextBoxColumn
 			// 
 			this.slot3NumDataGridViewTextBoxColumn.DataPropertyName = "Slot3Num";
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.slot3NumDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.slot3NumDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle7;
 			this.slot3NumDataGridViewTextBoxColumn.HeaderText = "";
 			this.slot3NumDataGridViewTextBoxColumn.Name = "slot3NumDataGridViewTextBoxColumn";
 			this.slot3NumDataGridViewTextBoxColumn.ReadOnly = true;
@@ -250,8 +285,8 @@
 			// slot4NumDataGridViewTextBoxColumn
 			// 
 			this.slot4NumDataGridViewTextBoxColumn.DataPropertyName = "Slot4Num";
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.slot4NumDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.slot4NumDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle8;
 			this.slot4NumDataGridViewTextBoxColumn.HeaderText = "";
 			this.slot4NumDataGridViewTextBoxColumn.Name = "slot4NumDataGridViewTextBoxColumn";
 			this.slot4NumDataGridViewTextBoxColumn.ReadOnly = true;
@@ -270,12 +305,38 @@
 			// 
 			this.shipSlotInfoBindingSource.DataSource = typeof(AircraftCarrierSlotSolver.ShipSlotInfo);
 			// 
+			// MeringLabel
+			// 
+			this.MeringLabel.AutoSize = true;
+			this.MeringLabel.Location = new System.Drawing.Point(742, 32);
+			this.MeringLabel.Name = "MeringLabel";
+			this.MeringLabel.Size = new System.Drawing.Size(31, 12);
+			this.MeringLabel.TabIndex = 5;
+			this.MeringLabel.Text = "ゆとり";
+			// 
+			// MerginNumericUpDown
+			// 
+			this.MerginNumericUpDown.Location = new System.Drawing.Point(779, 30);
+			this.MerginNumericUpDown.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+			this.MerginNumericUpDown.Name = "MerginNumericUpDown";
+			this.MerginNumericUpDown.Size = new System.Drawing.Size(41, 19);
+			this.MerginNumericUpDown.TabIndex = 6;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(932, 261);
+			this.Controls.Add(this.SecureButton);
+			this.Controls.Add(this.SuperiorityButton);
+			this.Controls.Add(this.AreaComboBox);
+			this.Controls.Add(this.MerginNumericUpDown);
 			this.Controls.Add(this.AirSuperiorityNumericUpDown);
+			this.Controls.Add(this.MeringLabel);
 			this.Controls.Add(this.AirSuperiorityLabel);
 			this.Controls.Add(this.ShipSelectComboBox);
 			this.Controls.Add(this.CalcButton);
@@ -293,6 +354,7 @@
 			this.menuStrip1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AirSuperiorityNumericUpDown)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.shipSlotInfoBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.MerginNumericUpDown)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -321,6 +383,11 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn slot4NumDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn slot4DataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewButtonColumn SettingButton;
+		private System.Windows.Forms.ComboBox AreaComboBox;
+		private System.Windows.Forms.Button SuperiorityButton;
+		private System.Windows.Forms.Button SecureButton;
+		private System.Windows.Forms.Label MeringLabel;
+		private System.Windows.Forms.NumericUpDown MerginNumericUpDown;
 	}
 }
 

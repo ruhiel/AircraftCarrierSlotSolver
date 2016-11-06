@@ -65,6 +65,8 @@ namespace AircraftCarrierSlotSolver
 			column.DataSource = _ShipInfoList.Select(x => x.Name).ToList();
 			ShipSelectComboBox.DataSource = _ShipInfoList.Select(x => x.Name).ToList();
 
+			AreaComboBox.DataSource = _AreaList.Select(x => x.Name).ToList();
+
 			if (!File.Exists(Properties.Resources.SettingFileName))
 			{
 				Settings.Instance.AirCraftLimit = _AirCraftList.ToDictionary(x => x.AirCraftName, _ => 0).ToList();
@@ -702,6 +704,16 @@ namespace AircraftCarrierSlotSolver
 				form.ShowDialog();
 				Calc();
 			}
+		}
+
+		private void SuperiorityButton_Click(object sender, EventArgs e)
+		{
+			AirSuperiorityNumericUpDown.Value = MerginNumericUpDown.Value + (decimal)(1.5 * _AreaList.Single(x => x.Name == AreaComboBox.SelectedValue.ToString()).AirSuperiorityPotential);
+		}
+
+		private void SecureButton_Click(object sender, EventArgs e)
+		{
+			AirSuperiorityNumericUpDown.Value = MerginNumericUpDown.Value + 3 * _AreaList.Single(x => x.Name == AreaComboBox.SelectedValue.ToString()).AirSuperiorityPotential;
 		}
 	}
 }
