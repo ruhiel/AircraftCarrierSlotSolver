@@ -54,6 +54,8 @@
     <Compile Include="AirCraftImprovementSetting.cs" />
     <Compile Include="AirCraftMap.cs" />
     <Compile Include="AirCraftSetting.cs" />
+    <Compile Include="Area.cs" />
+    <Compile Include="AreaMap.cs" />
     <Compile Include="Controls\DataGridViewVerticalScroll.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -103,6 +105,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Data\area.csv" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\AirCraftImprovementSetting.datasource" />
     <None Include="Properties\DataSources\AirCraftSetting.datasource" />
@@ -128,8 +131,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)Data\air.csv" "$(TargetDir)"
-copy "$(ProjectDir)Data\slots.csv" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>copy "$(ProjectDir)Data\*.csv" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

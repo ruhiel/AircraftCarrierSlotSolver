@@ -17,6 +17,7 @@ namespace AircraftCarrierSlotSolver
 	{
 		private List<AirCraft> _AirCraftList;
 		private List<ShipInfo> _ShipInfoList;
+		private List<Area> _AreaList;
 		private DataGridViewComboBoxEditingControl dataGridViewComboBox = null;
 
 		public MainForm()
@@ -47,6 +48,17 @@ namespace AircraftCarrierSlotSolver
 				using (var reader = new CsvReader(parser))
 				{
 					_ShipInfoList = reader.GetRecords<ShipInfo>().ToList();
+				}
+			}
+
+			using (var parser = new CsvParser(new StreamReader("area.csv", new UTF8Encoding(false))))
+			{
+				parser.Configuration.HasHeaderRecord = true;
+				parser.Configuration.RegisterClassMap<AreaMap>();
+
+				using (var reader = new CsvReader(parser))
+				{
+					_AreaList = reader.GetRecords<Area>().ToList();
 				}
 			}
 
