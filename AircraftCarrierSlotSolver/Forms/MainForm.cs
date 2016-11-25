@@ -81,7 +81,11 @@ namespace AircraftCarrierSlotSolver
 
 			foreach (var newItem in Settings.Instance.HistoryShips)
 			{
-				shipSlotInfoBindingSource.Add(CreateShipSlotInfo(newItem));
+				var shipSlot = CreateShipSlotInfo(newItem);
+				if(shipSlot != null)
+				{
+					shipSlotInfoBindingSource.Add(shipSlot);
+				}
 			}
 
 			AirSuperiorityNumericUpDown.Value = Settings.Instance.HistoryAirSuperiority;
@@ -93,7 +97,11 @@ namespace AircraftCarrierSlotSolver
 			var ship = Regex.Replace(newItem, "改.*", string.Empty);
 			if (!GetRowItemList().Select(x => x.ShipName).Any(y => y.Contains(ship)))
 			{
-				shipSlotInfoBindingSource.Add(CreateShipSlotInfo(newItem));
+				var shipSlot = CreateShipSlotInfo(newItem);
+				if (shipSlot != null)
+				{
+					shipSlotInfoBindingSource.Add(shipSlot);
+				}
 			}
 		}
 
@@ -156,8 +164,9 @@ namespace AircraftCarrierSlotSolver
 
 		private ShipSlotInfo CreateShipSlotInfo(string name)
 		{
-			var ship = _ShipInfoList.Where(x => x.Name == name).First();
-			return new ShipSlotInfo()
+			var ship = _ShipInfoList.Where(x => x.Name == name).FirstOrDefault();
+
+			return ship == null ? null : new ShipSlotInfo()
 			{
 				ShipName = ship.Name,
 				Slot1Num = ship.Slot1Num,
