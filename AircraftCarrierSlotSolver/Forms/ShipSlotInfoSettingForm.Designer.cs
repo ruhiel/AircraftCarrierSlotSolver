@@ -34,6 +34,7 @@
 			this.MinimumCheckBox = new System.Windows.Forms.CheckBox();
 			this.OKButton = new System.Windows.Forms.Button();
 			this.FirstSlotCheckBox = new System.Windows.Forms.CheckBox();
+			this.OnlyAttackerCheckBox = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// AttackCheckBox
@@ -82,7 +83,7 @@
 			// 
 			// OKButton
 			// 
-			this.OKButton.Location = new System.Drawing.Point(64, 130);
+			this.OKButton.Location = new System.Drawing.Point(65, 149);
 			this.OKButton.Name = "OKButton";
 			this.OKButton.Size = new System.Drawing.Size(75, 23);
 			this.OKButton.TabIndex = 1;
@@ -101,11 +102,23 @@
 			this.FirstSlotCheckBox.UseVisualStyleBackColor = true;
 			this.FirstSlotCheckBox.CheckedChanged += new System.EventHandler(this.FirstSlotCheckBox_CheckedChanged);
 			// 
+			// OnlyAttackerCheckBox
+			// 
+			this.OnlyAttackerCheckBox.AutoSize = true;
+			this.OnlyAttackerCheckBox.Location = new System.Drawing.Point(12, 122);
+			this.OnlyAttackerCheckBox.Name = "OnlyAttackerCheckBox";
+			this.OnlyAttackerCheckBox.Size = new System.Drawing.Size(81, 16);
+			this.OnlyAttackerCheckBox.TabIndex = 2;
+			this.OnlyAttackerCheckBox.Text = "攻撃機のみ";
+			this.OnlyAttackerCheckBox.UseVisualStyleBackColor = true;
+			this.OnlyAttackerCheckBox.CheckedChanged += new System.EventHandler(this.OnlyAttackerCheckBox_CheckedChanged);
+			// 
 			// ShipSlotInfoSettingForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(197, 165);
+			this.ClientSize = new System.Drawing.Size(197, 193);
+			this.Controls.Add(this.OnlyAttackerCheckBox);
 			this.Controls.Add(this.FirstSlotCheckBox);
 			this.Controls.Add(this.OKButton);
 			this.Controls.Add(this.MinimumCheckBox);
@@ -130,5 +143,6 @@
 		private System.Windows.Forms.CheckBox MinimumCheckBox;
 		private System.Windows.Forms.Button OKButton;
 		private System.Windows.Forms.CheckBox FirstSlotCheckBox;
+		private System.Windows.Forms.CheckBox OnlyAttackerCheckBox;
 	}
 }

@@ -177,7 +177,8 @@ namespace AircraftCarrierSlotSolver
 				Saiun = false,
 				MaintenancePersonnel = false,
 				MinimumSlot = false,
-				FirstSlotAttack = false
+				FirstSlotAttack = false,
+				OnlyAttacker = false
 			};
 		}
 
@@ -546,6 +547,18 @@ namespace AircraftCarrierSlotSolver
 					writer.WriteLine(">= 1");
 					writer.WriteLine();
 				}
+			}
+
+			foreach (var info in shipSlotList.Where(x => x.OnlyAttacker))
+			{
+				var list = infoList.Where(x => x.Ship.Item1.Name == info.ShipName && x.AirCraft.Item1.Type == "艦戦");
+				foreach (var i in list)
+				{
+					var text = "+ " + i.SlotName + @" \ 攻撃機のみ";
+					writer.WriteLine(text);
+				}
+				writer.WriteLine("= 0");
+				writer.WriteLine();
 			}
 
 			OutputEquipCondition(writer, shipSlotList);
